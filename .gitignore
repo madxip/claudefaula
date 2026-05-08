@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Zip files
+*.zip
+
+# Vite cache
+.vite/
+
+# Editor
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# State files (generades per l'eina de prototip)
+.image-slots.state.json
+
+# Logs
+*.log
+npm-debug.log*
