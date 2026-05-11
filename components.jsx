@@ -1,6 +1,5 @@
 // components.jsx — Nav, Footer, Marquee shared bits
-
-const { useEffect, useState, useRef } = React;
+import React, { useEffect, useState, useRef } from 'react';
 
 function NavBar({ page, setPage, tweaks }) {
   const links = [
@@ -155,4 +154,4 @@ function useReveal() {
   });
 }
 
-Object.assign(window, { NavBar, Marquee, Footer, useReveal });
+export { NavBar, Marquee, Footer, useReveal };

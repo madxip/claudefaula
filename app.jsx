@@ -1,4 +1,12 @@
 // app.jsx — root with routing + tweaks
+import React, { useEffect, useState } from 'react';
+import { NavBar, Footer } from './components.jsx';
+import { Home } from './home.jsx';
+import { Escola, Professorat, Contacte } from './pages.jsx';
+import {
+  useTweaks, TweaksPanel, TweakSection,
+  TweakColor, TweakToggle, TweakSelect, TweakRadio, TweakButton,
+} from './tweaks-panel.jsx';
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "palette": ["#f5f1e8", "#1a1a1a", "#c9472b"],
@@ -94,4 +102,4 @@ function App() {
   );
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+export default App;

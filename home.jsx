@@ -1,4 +1,6 @@
 // home.jsx — pàgina principal
+import React, { useEffect, useState } from 'react';
+import { Marquee, useReveal } from './components.jsx';
 
 const PILARS = [
   {
@@ -265,4 +267,4 @@ function Home({ setPage, tweaks }) {
   );
 }
 
-Object.assign(window, { Home });
+export { Home };

@@ -1,3 +1,4 @@
+import React from 'react';
 
 // tweaks-panel.jsx
 // Reusable Tweaks shell + form-control helpers.
@@ -554,15 +555,15 @@ function TweakColor({ label, value, options, onChange }) {
   );
 }
 
-function TweakButton({ label, onClick, secondary = false }) {
+function TweakButton({ label, children, onClick, secondary = false }) {
   return (
     <button type="button" className={secondary ? 'twk-btn secondary' : 'twk-btn'}
-            onClick={onClick}>{label}</button>
+            onClick={onClick}>{children || label}</button>
   );
 }
 
-Object.assign(window, {
+export {
   useTweaks, TweaksPanel, TweakSection, TweakRow,
   TweakSlider, TweakToggle, TweakRadio, TweakSelect,
   TweakText, TweakNumber, TweakColor, TweakButton,
-});
+};

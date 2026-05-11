@@ -1,4 +1,6 @@
 // pages.jsx — Escola, Professorat, Contacte
+import React, { useState } from 'react';
+import { Marquee, useReveal } from './components.jsx';
 
 function Escola({ setPage }) {
   useReveal();
@@ -233,4 +235,4 @@ function Contacte() {
   );
 }
 
-Object.assign(window, { Escola, Professorat, Contacte });
+export { Escola, Professorat, Contacte };
