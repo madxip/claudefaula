@@ -39,7 +39,7 @@ const CURSOS = [
   { age: '8 – 18 anys', title: <>Llenguatge i <em>instrument</em></>, body: 'Itinerari complet: instrument individual, llenguatge musical, conjunt i cor.', dur: '2 sessions/setm', cat: 'itinerari' },
   { age: 'Joves', title: <>Combos & <em>ensembles</em></>, body: 'Combos de pop-rock, jazz, música tradicional, ensemble de vents i cor jove.', dur: '90 min/setm', cat: 'conjunt' },
   { age: 'Adults', title: <>Adults <em>(de 18 a 99)</em></>, body: 'Cap edat per començar. Itinerari adaptat al ritme i objectius personals.', dur: 'Flexible', cat: 'adults' },
-  { age: 'Tots', title: <>Cor de <em>l\'escola</em></>, body: 'Veus mixtes obertes a alumnat, famílies i veïnat. Sense audició prèvia.', dur: '90 min/setm', cat: 'conjunt' },
+  { age: 'Tots', title: <>Cor de <em>l'escola</em></>, body: 'Veus mixtes obertes a alumnat, famílies i veïnat. Sense audició prèvia.', dur: '90 min/setm', cat: 'conjunt' },
 ];
 
 const CHIPS = [
@@ -116,6 +116,14 @@ function Home({ setPage, tweaks }) {
       .catch(() => setEvents([])); // si falla, no mostra res
   }, []);
 
+  // Lightbox
+  const [lightboxImg, setLightboxImg] = useState(null);
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') setLightboxImg(null); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
   // word-by-word reveal for hero
   const heroWords = ['Una', 'escola', 'd\'', null, 'arts', null, 'al', 'barri,', null, 'des', 'de', '1996.'];
 
@@ -157,9 +165,8 @@ function Home({ setPage, tweaks }) {
           <div>
             <span className="eyebrow">§ Ideari</span>
             <h2 className="reveal" style={{ marginTop: 16 }}>
-              Treballem<br />
-              <em>per a la</em><br />
-              comunitat.
+              Treballem per a la<br />
+              <em>comunitat</em>.
             </h2>
             <div className="tag-list">
               <span className="tag">Il·lusió</span>
@@ -233,7 +240,12 @@ function Home({ setPage, tweaks }) {
             {events.map((e, i) => e.img ? (
               // Acte amb cartell
               <article key={i} className="event event-featured">
-                <img className="event-poster" src={e.img} alt={`Cartell: ${e.title}`} />
+                <img
+                  className="event-poster event-poster--clickable"
+                  src={e.img}
+                  alt={`Cartell: ${e.title}`}
+                  onClick={() => setLightboxImg(e.img)}
+                />
                 <div className="event-featured-body">
                   <div className="event-when">
                     <span className="event-date">{e.date}</span>
@@ -262,6 +274,19 @@ function Home({ setPage, tweaks }) {
             ))}
           </div>
         </section>
+      )}
+
+      {/* LIGHTBOX */}
+      {lightboxImg && (
+        <div className="lightbox" onClick={() => setLightboxImg(null)} role="dialog" aria-modal="true">
+          <button className="lightbox-close" onClick={() => setLightboxImg(null)} aria-label="Tancar">×</button>
+          <img
+            className="lightbox-img"
+            src={lightboxImg}
+            alt="Cartell ampliat"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
       )}
     </main>
   );
