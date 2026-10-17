@@ -183,6 +183,7 @@ function Contacte() {
       correuPares: contactForm.correu.trim(),
       cursos: `[CONTACTE: ${contactForm.tema}]`,
       alergies: contactForm.missatge.trim(),
+      destinatariMail: 'info@claudefaula.cat',
     };
 
     fetch(DEFAULT_WEBHOOK_URL, {
@@ -804,6 +805,7 @@ function Inscripcio({ setPage }) {
       iban: form.iban.replace(/\s+/g, '').toUpperCase(),
       autoritzacioImatge: form.autoritzacioImatge ? 'Sí' : 'No',
       acceptaReglament: form.acceptaReglament ? 'Sí' : 'No',
+      destinatariMail: 'info@claudefaula.cat',
     };
 
     if (DEFAULT_WEBHOOK_URL) {
