@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <title>Claudefaula — Escola de Música i Arts</title>
+  <script>
+    // Redirecció automàtica a l'arrel preservant la ruta per a la SPA (compatible amb Vercel i subdirectoris)
+    var path = window.location.pathname;
+    var hash = window.location.hash;
+    var search = window.location.search;
+    var base = path.indexOf('/claudefaula/') === 0 ? '/claudefaula/' : '/';
+    window.location.replace(window.location.origin + base + '?redirect=' + encodeURIComponent(path + search + hash));
+  </script>
+</head>
+<body>
+  <p>Carregant Claudefaula...</p>
+</body>
+</html>
