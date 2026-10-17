@@ -808,6 +808,26 @@ function Inscripcio({ setPage }) {
       destinatariMail: 'info@claudefaula.cat',
     };
 
+    const clearSensitiveData = () => {
+      setForm(f => ({
+        ...f,
+        nomAlumne: '',
+        dataNaixement: '',
+        dniAlumne: '',
+        dniPares: '',
+        adreca: '',
+        poblacio: '',
+        telefAlumne: '',
+        correuAlumne: '',
+        nomPares: '',
+        telefPares: '',
+        correuPares: '',
+        tsi: '',
+        alergies: '',
+        iban: '',
+      }));
+    };
+
     if (DEFAULT_WEBHOOK_URL) {
       fetch(DEFAULT_WEBHOOK_URL, {
         method: 'POST',
@@ -816,15 +836,18 @@ function Inscripcio({ setPage }) {
         body: JSON.stringify(payload)
       })
         .then(() => {
+          clearSensitiveData();
           setIsSending(false);
           setSubmitted(true);
         })
         .catch(() => {
+          clearSensitiveData();
           setIsSending(false);
           setSubmitted(true);
         });
     } else {
       setTimeout(() => {
+        clearSensitiveData();
         setIsSending(false);
         setSubmitted(true);
       }, 500);
@@ -1010,6 +1033,9 @@ function Inscripcio({ setPage }) {
                   <input
                     type="text"
                     required
+                    autoComplete="off"
+                    data-lpignore="true"
+                    data-1p-ignore="true"
                     placeholder="12345678X"
                     value={form.dniAlumne}
                     onChange={(e) => updateForm('dniAlumne', e.target.value)}
@@ -1020,6 +1046,9 @@ function Inscripcio({ setPage }) {
                   <input
                     type="text"
                     required
+                    autoComplete="off"
+                    data-lpignore="true"
+                    data-1p-ignore="true"
                     placeholder="TSI 123456789"
                     value={form.tsi}
                     onChange={(e) => updateForm('tsi', e.target.value)}
@@ -1043,6 +1072,9 @@ function Inscripcio({ setPage }) {
                   <label>DNI Pares o Tutors (si l'alumne és menor)</label>
                   <input
                     type="text"
+                    autoComplete="off"
+                    data-lpignore="true"
+                    data-1p-ignore="true"
                     placeholder="87654321Y"
                     value={form.dniPares}
                     onChange={(e) => updateForm('dniPares', e.target.value)}
@@ -1083,6 +1115,7 @@ function Inscripcio({ setPage }) {
 
                   <input
                     type="text"
+                    autoComplete="off"
                     placeholder="Cap, o bé al·lèrgia a..."
                     value={form.alergies}
                     onChange={(e) => updateForm('alergies', e.target.value)}
@@ -1103,7 +1136,7 @@ function Inscripcio({ setPage }) {
 
           {/* PAS 3: PAGAMENT I CONFIRMACIÓ */}
           {step === 3 && (
-            <form className="wizard-step" onSubmit={handleSubmit}>
+            <form className="wizard-step" onSubmit={handleSubmit} autoComplete="off">
               {/* Camp ocult anti-spam (honeypot) */}
               <input
                 type="text"
@@ -1121,6 +1154,11 @@ function Inscripcio({ setPage }) {
                 <input
                   type="text"
                   required
+                  autoComplete="off"
+                  data-lpignore="true"
+                  data-1p-ignore="true"
+                  data-form-type="other"
+                  spellCheck="false"
                   placeholder="ES00 0000 0000 0000 0000 0000"
                   value={form.iban}
                   onChange={(e) => updateForm('iban', e.target.value)}
