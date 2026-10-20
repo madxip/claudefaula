@@ -257,7 +257,7 @@ function Home({ setPage, tweaks }) {
       </section>
 
       {/* CURSOS */}
-      <section className="cursos">
+      <section id="cursos" className="cursos">
         <div className="cursos-head">
           <h3>Què hi <em>fem.</em></h3>
           <span className="mono" style={{ color: 'var(--muted)', fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.06em' }}>0–99 anys</span>
@@ -302,7 +302,7 @@ function Home({ setPage, tweaks }) {
 
       {/* AGENDA */}
       {events.length > 0 && (
-        <section className="agenda">
+        <section id="agenda" className="agenda">
           <div className="agenda-head">
             <h3>Agenda <em>de curs.</em></h3>
             <div className="meta">{events.length} {events.length === 1 ? 'cita' : 'cites'}</div>

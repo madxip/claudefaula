@@ -369,10 +369,61 @@ function TopBanner({ setPage, csvUrl = DEFAULT_BANNER_CSV_URL }) {
 
   const handleAction = () => {
     if (!banner.buttonLink) return;
-    if (/^https?:\/\//i.test(banner.buttonLink) || banner.buttonLink.startsWith('/')) {
-      window.open(banner.buttonLink, '_blank', 'noopener,noreferrer');
+    const raw = banner.buttonLink.trim();
+    const clean = raw.toLowerCase().replace(/^\/+|\/+$/g, '');
+
+    // 1. Enllaç directe a la secció d'Agenda (va a Inici i fa scroll fins a l'agenda)
+    if (clean === 'agenda' || clean === '#agenda') {
+      setPage('home');
+      setTimeout(() => {
+        const el = document.getElementById('agenda') || document.querySelector('.agenda');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 120);
+      return;
+    }
+
+    // 2. Enllaç directe a la secció de Cursos de la portada
+    if (clean === 'cursos' || clean === '#cursos') {
+      setPage('home');
+      setTimeout(() => {
+        const el = document.getElementById('cursos') || document.querySelector('.cursos');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 120);
+      return;
+    }
+
+    // 3. Pàgines internes de la web (accepta accents, majúscules o barres inicials)
+    const ROUTE_ALIASES = {
+      'home': 'home',
+      'inici': 'home',
+      'escola': 'escola',
+      'l\'escola': 'escola',
+      'historia': 'escola',
+      'història': 'escola',
+      'escoles': 'escoles',
+      'a les escoles': 'escoles',
+      'professorat': 'professorat',
+      'professors': 'professorat',
+      'equip': 'professorat',
+      'inscripcio': 'inscripcio',
+      'inscripció': 'inscripcio',
+      'inscripcions': 'inscripcio',
+      'matricula': 'inscripcio',
+      'matrícula': 'inscripcio',
+      'preus': 'inscripcio',
+      'contacte': 'contacte',
+    };
+
+    if (ROUTE_ALIASES[clean]) {
+      setPage(ROUTE_ALIASES[clean]);
+      return;
+    }
+
+    // 4. Qualsevol URL externa (Instagram, entrades, document PDF, altra web...)
+    if (/^https?:\/\//i.test(raw) || raw.startsWith('/')) {
+      window.open(raw, '_blank', 'noopener,noreferrer');
     } else {
-      setPage(banner.buttonLink);
+      setPage(clean);
     }
   };
 
