@@ -87,15 +87,77 @@ function resolveImg(url) {
   return url;
 }
 
+const CATALAN_MONTHS = {
+  'gener': 0, 'febrer': 1, 'març': 2, 'marc': 2, 'abril': 3, 'maig': 4, 'juny': 5,
+  'juliol': 6, 'agost': 7, 'setembre': 8, 'octubre': 9, 'novembre': 10, 'desembre': 11,
+  'gen': 0, 'feb': 1, 'mar': 2, 'abr': 3, 'mai': 4, 'jun': 5,
+  'jul': 6, 'ago': 7, 'set': 8, 'oct': 9, 'nov': 10, 'des': 11,
+};
+
+function parseEventEndDate(str) {
+  if (!str) return null;
+  const s = str.trim().toLowerCase();
+
+  // 1. Format numèric dd/mm/yyyy o dd-mm-yyyy (agafem l'última data si hi ha un rang com "13/04/2026 - 25/05/2026")
+  const numMatches = [...s.matchAll(/(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})/g)];
+  if (numMatches.length > 0) {
+    const last = numMatches[numMatches.length - 1];
+    const d = parseInt(last[1], 10);
+    const m = parseInt(last[2], 10) - 1;
+    let y = parseInt(last[3], 10);
+    if (y < 100) y += 2000;
+    return new Date(y, m, d, 23, 59, 59, 999);
+  }
+
+  // 2. Format ISO yyyy-mm-dd
+  const isoMatches = [...s.matchAll(/(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/g)];
+  if (isoMatches.length > 0) {
+    const last = isoMatches[isoMatches.length - 1];
+    return new Date(parseInt(last[1], 10), parseInt(last[2], 10) - 1, parseInt(last[3], 10), 23, 59, 59, 999);
+  }
+
+  // 3. Text en català (ex: "29 de novembre de 2026" o "Del 13 d'abril al 25 de maig de 2026")
+  const yearMatch = s.match(/\b(20\d{2})\b/);
+  const defaultYear = yearMatch ? parseInt(yearMatch[1], 10) : new Date().getFullYear();
+
+  const textMatches = [
+    ...s.matchAll(/(\d{1,2})\s*(?:de\s+|d['’]\s*)?(gener|febrer|març|marc|abril|maig|juny|juliol|agost|setembre|octubre|novembre|desembre|gen|feb|mar|abr|mai|jun|jul|ago|set|oct|nov|des)(?:\s+(?:de\s+|del\s+)?(20\d{2}))?/gi)
+  ];
+  if (textMatches.length > 0) {
+    const last = textMatches[textMatches.length - 1];
+    const d = parseInt(last[1], 10);
+    const mName = last[2].toLowerCase();
+    const m = CATALAN_MONTHS[mName];
+    const y = last[3] ? parseInt(last[3], 10) : defaultYear;
+    if (m !== undefined) {
+      return new Date(y, m, d, 23, 59, 59, 999);
+    }
+  }
+
+  return null;
+}
+
+function isAgendaEventActive(dateStr, dataFiCol) {
+  const now = new Date();
+  const targetStr = (dataFiCol && dataFiCol.trim()) ? dataFiCol : dateStr;
+  const endDate = parseEventEndDate(targetStr);
+  if (!endDate) return true; // Si és un text lliure sense data concreta, es manté visible
+  return now <= endDate;
+}
+
 function parseAgendaCSV(text) {
   const lines = text.trim().replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n');
   if (lines.length < 2) return [];
   return lines.slice(1)
     .map(line => {
-      const [data, hora, titol, lloc, preu, etiqueta, visible, imatge] = parseCSVLine(line);
-      return { date: data, time: hora, title: titol, place: lloc, price: preu, tag: etiqueta, visible, img: resolveImg(imatge) };
+      const [data, hora, titol, lloc, preu, etiqueta, visible, imatge, dataFi] = parseCSVLine(line);
+      return { date: data, time: hora, title: titol, place: lloc, price: preu, tag: etiqueta, visible, img: resolveImg(imatge), dataFi };
     })
-    .filter(e => ['si', 'sí'].includes(e.visible?.toLowerCase().trim()) && e.date?.trim());
+    .filter(e =>
+      ['si', 'sí', '1', 'true'].includes(e.visible?.toLowerCase().trim()) &&
+      e.date?.trim() &&
+      isAgendaEventActive(e.date, e.dataFi)
+    );
 }
 
 function Home({ setPage, tweaks }) {

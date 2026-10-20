@@ -1398,8 +1398,221 @@ function Inscripcio({ setPage }) {
   );
 }
 
+const DEFAULT_ESCOLES_DATA = [
+  { escola: 'Escola Santa Eugènia', ciutat: 'Girona', activitat: 'Sensibilització Musical (Infantil)', horari: 'Migdia / Tarda', preu: '', visible: 'Si' },
+  { escola: 'Escola Santa Eugènia', ciutat: 'Girona', activitat: 'Cant Coral Social (Primària)', horari: 'Migdia / Tarda', preu: '', visible: 'Si' },
+  { escola: 'Escola Montfalgars', ciutat: 'Girona', activitat: 'Iniciació i Llenguatge Musical', horari: 'Extraescolar', preu: '', visible: 'Si' },
+  { escola: 'Escola Montfalgars', ciutat: 'Girona', activitat: 'Instrument en Grup (Guitarra / Teclat / Percussió)', horari: 'Extraescolar', preu: '', visible: 'Si' },
+  { escola: 'Escola Dalmau Carles', ciutat: 'Girona', activitat: 'Sensibilització i Expressió Musical', horari: 'Extraescolar', preu: '', visible: 'Si' },
+  { escola: 'Escola Dalmau Carles', ciutat: 'Girona', activitat: 'Coral i Conjunt Instrumental', horari: 'Extraescolar', preu: '', visible: 'Si' },
+  { escola: 'Escola de La Draga', ciutat: 'Banyoles', activitat: 'Conjunt Instrumental', horari: 'Extraescolar', preu: '', visible: 'Si' },
+  { escola: 'Escola de La Draga', ciutat: 'Banyoles', activitat: 'Coral Escolar', horari: 'Extraescolar', preu: '', visible: 'Si' },
+  { escola: 'Escola Camins', ciutat: 'Banyoles', activitat: 'Taller de Minimúsica i Ritme (Infantil)', horari: 'Extraescolar', preu: '', visible: 'Si' },
+  { escola: 'Escola Camins', ciutat: 'Banyoles', activitat: 'Iniciació Musical (Primària)', horari: 'Extraescolar', preu: '', visible: 'Si' },
+  { escola: 'Escola Baldiri Reixac', ciutat: 'Banyoles', activitat: 'Sensibilització Musical', horari: 'Extraescolar', preu: '', visible: 'Si' },
+  { escola: 'Escola Baldiri Reixac', ciutat: 'Banyoles', activitat: 'Llenguatge i Instrument', horari: 'Extraescolar', preu: '', visible: 'Si' },
+];
+
+// Quan creïs i publiquis la pestanya "Escoles" al Google Sheet com a CSV, pots enganxar aquí el seu enllaç o el seu gid:
+const ESCOLES_CSV_URL = import.meta.env.VITE_ESCOLES_CSV_URL || '';
+
+function parseEscolesCSV(text) {
+  const lines = text.trim().replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n');
+  if (lines.length < 2) return null;
+  const header = lines[0].toLowerCase();
+  if (!header.includes('escola') && !header.includes('centre')) return null;
+
+  const rows = [];
+  for (let i = 1; i < lines.length; i++) {
+    const cols = parseCSVLine(lines[i]);
+    if (cols.length >= 2) {
+      // Admet: escola | ciutat | activitat | horari/descripcio | preu | visible
+      // O bé format simplificat: escola | activitat | horari | preu | visible
+      let escola = '', ciutat = '', activitat = '', horari = '', preu = '', visible = 'si';
+      if (header.includes('ciutat') || header.includes('poblaci')) {
+        [escola, ciutat, activitat, horari, preu, visible] = cols;
+      } else {
+        [escola, activitat, horari, preu, visible] = cols;
+      }
+      const isVis = ['si', 'sí', '1', 'true', ''].includes((visible || 'si').toLowerCase().trim());
+      if (escola && activitat && isVis) {
+        // Si algú posa múltiples activitats separades per punt i coma (;) en una sola fila, les desglossem automàticament
+        const actParts = activitat.split(';').map(a => a.trim()).filter(Boolean);
+        actParts.forEach(actName => {
+          rows.push({
+            escola: escola.trim(),
+            ciutat: (ciutat || '').trim(),
+            activitat: actName,
+            horari: (horari || '').trim(),
+            preu: (preu || '').trim(),
+          });
+        });
+      }
+    }
+  }
+  return rows.length > 0 ? rows : null;
+}
+
+const CURSOS_ESCOLARS = [
+  'I2 (Llar d\'infants / P2)',
+  'I3 (Educació Infantil)',
+  'I4 (Educació Infantil)',
+  'I5 (Educació Infantil)',
+  '1r de Primària',
+  '2n de Primària',
+  '3r de Primària',
+  '4t de Primària',
+  '5è de Primària',
+  '6è de Primària',
+  'ESO / Altres',
+];
+
 function Escoles({ setPage }) {
   useReveal();
+  const [escolesData, setEscolesData] = useState(DEFAULT_ESCOLES_DATA);
+  const [submitted, setSubmitted] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [actError, setActError] = useState(false);
+
+  useEffect(() => {
+    if (!ESCOLES_CSV_URL) return;
+    fetch(`${ESCOLES_CSV_URL}${ESCOLES_CSV_URL.includes('?') ? '&' : '?'}_t=${Date.now()}`, { cache: 'no-store' })
+      .then(r => r.ok ? r.text() : Promise.reject(r.status))
+      .then(text => {
+        const parsed = parseEscolesCSV(text);
+        if (parsed) setEscolesData(parsed);
+      })
+      .catch(() => { });
+  }, []);
+
+  const [form, setForm] = useState({
+    nomAlumne: '',
+    escola: '',
+    activitats: [],
+    cursEscolar: '',
+    dataNaixement: '',
+    nomPares: '',
+    telefon: '',
+    correu: '',
+    iban: '',
+    acceptaTermes: false,
+    websiteHoneypot: '',
+  });
+
+  // Llista única d'escoles disponibles al Google Sheet
+  const escolesUniques = Array.from(new Set(escolesData.map(d => d.escola)));
+
+  // Activitats que es fan a l'escola seleccionada
+  const activitatsDisponibles = form.escola
+    ? escolesData.filter(d => d.escola === form.escola)
+    : [];
+
+  // Agrupació per mostrar targetes informatives de les escoles i les seves activitats
+  const escolesResum = escolesUniques.map(nomEscola => {
+    const items = escolesData.filter(d => d.escola === nomEscola);
+    return {
+      nom: nomEscola,
+      ciutat: items.find(i => i.ciutat)?.ciutat || '',
+      activitats: items.map(i => i.activitat),
+    };
+  });
+
+  const updateField = (field, val) => {
+    setForm(f => ({ ...f, [field]: val }));
+  };
+
+  const handleSelectEscola = (novaEscola) => {
+    setForm(f => ({
+      ...f,
+      escola: novaEscola,
+      activitats: [], // Reiniciem les activitats quan canvia d'escola
+    }));
+    setActError(false);
+  };
+
+  const toggleActivitat = (actNom) => {
+    setForm(f => {
+      const exists = f.activitats.includes(actNom);
+      const next = exists ? f.activitats.filter(a => a !== actNom) : [...f.activitats, actNom];
+      if (next.length > 0) setActError(false);
+      return { ...f, activitats: next };
+    });
+  };
+
+  const handleSubmitEscoles = (e) => {
+    e.preventDefault();
+    if (form.websiteHoneypot) {
+      setSubmitted(true);
+      return;
+    }
+    if (form.activitats.length === 0) {
+      setActError(true);
+      const box = document.getElementById('escoles-activitats-box');
+      if (box) box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    setIsSending(true);
+    const payload = {
+      tipusFormulari: 'INSCRIPCIO_ESCOLA_EXTERNA',
+      timestamp: new Date().toLocaleString('ca-ES'),
+      seu: `A les Escoles: ${form.escola}`,
+      nomAlumne: form.nomAlumne.trim(),
+      dataNaixement: form.dataNaixement.trim(),
+      dniAlumne: `Curs: ${form.cursEscolar}`,
+      tsi: '-',
+      nomPares: form.nomPares.trim(),
+      dniPares: '-',
+      telefPares: form.telefon.trim(),
+      correuPares: form.correu.trim(),
+      adreca: `Escola: ${form.escola} (${form.cursEscolar})`,
+      alergies: '-',
+      cursos: form.activitats.map(a => `${a} [${form.escola}]`).join(', '),
+      instrument: form.cursEscolar,
+      subtotalMensual: 'Segons quota escola',
+      matricula: '-',
+      totalPrimerPagament: '-',
+      iban: form.iban.replace(/\s+/g, '').toUpperCase(),
+      acceptaReglament: 'Sí',
+      destinatariMail: 'info@claudefaula.cat',
+    };
+
+    const clearSensitive = () => {
+      setForm({
+        nomAlumne: '',
+        escola: '',
+        activitats: [],
+        cursEscolar: '',
+        dataNaixement: '',
+        nomPares: '',
+        telefon: '',
+        correu: '',
+        iban: '',
+        acceptaTermes: false,
+        websiteHoneypot: '',
+      });
+    };
+
+    fetch(DEFAULT_WEBHOOK_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload),
+    })
+      .then(() => {
+        clearSensitive();
+        setIsSending(false);
+        setSubmitted(true);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      })
+      .catch(() => {
+        clearSensitive();
+        setIsSending(false);
+        setSubmitted(true);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+  };
+
   const activitatsEscoles = [
     { title: 'Sensibilització Musical en Horari Lectiu', desc: 'Projectes d\'iniciació al ritme, la cançó i l\'expressió corporal per a educació infantil (I2 a I5).' },
     { title: 'Extraescolars de Llenguatge i Instrument', desc: 'Classes de música en grups reduïts i instrument col·lectiu a la mateixa escola al migdia o en acabar les classes.' },
@@ -1407,14 +1620,20 @@ function Escoles({ setPage }) {
     { title: 'Tallers de Teatre Musical i Moviment', desc: 'Tallers d\'expressió artística, teatre i cant combinats per a la comunitat escolar.' },
   ];
 
-  const escolesActuals = [
-    { nom: 'Escola Santa Eugènia', ciutat: 'Girona', detall: 'Projecte coral i sensibilització musical' },
-    { nom: 'Escola Montfalgars', ciutat: 'Girona', detall: 'Activitats musicals extraescolars i tallers' },
-    { nom: 'Escola Dalmau Carles', ciutat: 'Girona', detall: 'Iniciació musical i expressió en grup' },
-    { nom: 'Escola de La Draga', ciutat: 'Banyoles', detall: 'Conjunts instrumentals i coral escolar' },
-    { nom: 'Escola Camins', ciutat: 'Banyoles', detall: 'Tallers de minimúsica i ritme' },
-    { nom: 'Escola Baldiri Reixac', ciutat: 'Banyoles', detall: 'Sensibilització i continuïtat amb l\'escola de música' },
-  ];
+  if (submitted) {
+    return (
+      <main style={{ padding: 'clamp(60px, 8vw, 120px) var(--pad)', textAlign: 'center', maxWidth: '720px', margin: '0 auto' }}>
+        <span className="eyebrow" style={{ display: 'block', marginBottom: 16 }}>— Confirmació d'inscripció escolar</span>
+        <h1 className="serif" style={{ fontSize: 'clamp(36px, 5vw, 64px)', marginBottom: 16 }}>Inscripció <em>rebuda.</em></h1>
+        <p className="lede" style={{ color: 'var(--muted)', fontSize: 20, marginBottom: 32 }}>
+          Gràcies! Hem rebut la inscripció per a les activitats de <strong>Claudefaula a les Escoles</strong>. Ens posarem en contacte amb vosaltres per confirmar l'inici i els detalls del grup.
+        </p>
+        <button className="btn" onClick={() => { setSubmitted(false); setPage('home'); }}>
+          Tornar a l'inici →
+        </button>
+      </main>
+    );
+  }
 
   return (
     <main className="escoles-page">
@@ -1424,8 +1643,317 @@ function Escoles({ setPage }) {
           <div className="page-hero-side">
             <span className="eyebrow">— Educació i Comunitat</span>
             <p className="lede reveal">
-              Portem la música i les arts escèniques a les escoles de primària. Col·laborem amb equips directius i AFAs oferint tallers lectius i activitats extraescolars de qualitat.
+              Portem la música i les arts escèniques a les escoles de primària. Inscriu-te a les activitats extraescolars de la teva escola o consulta els centres on col·laborem.
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* FORMULARI D'INSCRIPCIÓ A LES ESCOLES */}
+      <section id="formulari-escoles" className="section" style={{ padding: 'clamp(32px, 5vw, 64px) var(--pad)', maxWidth: '1040px', margin: '0 auto' }}>
+        <div style={{
+          background: 'var(--paper)',
+          border: 'var(--hairline)',
+          borderRadius: 12,
+          padding: 'clamp(24px, 4vw, 48px)',
+          boxShadow: '0 8px 30px rgba(0,0,0,0.04)'
+        }}>
+          <div style={{ marginBottom: 28 }}>
+            <span className="eyebrow" style={{ color: 'var(--accent)' }}>— Curs 2026–2027 · Extraescolars als Centres</span>
+            <h2 className="serif" style={{ fontSize: 'clamp(30px, 4vw, 46px)', margin: '6px 0 8px' }}>
+              Inscripció d'Activitats <em>a la teva Escola</em>
+            </h2>
+            <p style={{ color: 'var(--muted)', fontSize: 15, margin: 0 }}>
+              Selecciona l'escola per veure i triar les activitats musicals que s'hi ofereixen aquest curs.
+            </p>
+          </div>
+
+          <form onSubmit={handleSubmitEscoles} autoComplete="off">
+            {/* Camp ocult anti-spam (honeypot) */}
+            <input
+              type="text"
+              name="website_url"
+              tabIndex="-1"
+              autoComplete="off"
+              value={form.websiteHoneypot}
+              onChange={(e) => updateField('websiteHoneypot', e.target.value)}
+              style={{ position: 'absolute', left: '-9999px', opacity: 0, height: 0, width: 0 }}
+              aria-hidden="true"
+            />
+
+            <div className="form-grid-2">
+              <div className="field">
+                <label>Nom i cognoms de l'alumne/a *</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="Nom i cognoms"
+                  value={form.nomAlumne}
+                  onChange={(e) => updateField('nomAlumne', e.target.value)}
+                />
+              </div>
+
+              <div className="field">
+                <label>Data de naixement (dd/mm/aaaa) *</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="Ex: 15/05/2018"
+                  value={form.dataNaixement}
+                  onChange={(e) => updateField('dataNaixement', e.target.value)}
+                />
+              </div>
+
+              <div className="field">
+                <label>Escola *</label>
+                <select
+                  required
+                  value={form.escola}
+                  onChange={(e) => handleSelectEscola(e.target.value)}
+                  style={{
+                    width: '100%',
+                    padding: '12px 14px',
+                    fontSize: 15,
+                    borderRadius: 6,
+                    border: 'var(--hairline)',
+                    background: 'var(--bg)',
+                    color: form.escola ? 'var(--ink)' : 'var(--muted)',
+                  }}
+                >
+                  <option value="">-- Selecciona l'escola --</option>
+                  {escolesUniques.map((esc, idx) => (
+                    <option key={idx} value={esc}>{esc}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="field">
+                <label>Curs escolar que fa *</label>
+                <select
+                  required
+                  value={form.cursEscolar}
+                  onChange={(e) => updateField('cursEscolar', e.target.value)}
+                  style={{
+                    width: '100%',
+                    padding: '12px 14px',
+                    fontSize: 15,
+                    borderRadius: 6,
+                    border: 'var(--hairline)',
+                    background: 'var(--bg)',
+                    color: form.cursEscolar ? 'var(--ink)' : 'var(--muted)',
+                  }}
+                >
+                  <option value="">-- Selecciona el curs escolar --</option>
+                  {CURSOS_ESCOLARS.map((c, idx) => (
+                    <option key={idx} value={c}>{c}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            {/* ACTIVITATS DINÀMIQUES SEGONS L'ESCOLA TRIADA */}
+            <div
+              id="escoles-activitats-box"
+              style={{
+                marginTop: 24,
+                marginBottom: 24,
+                padding: 20,
+                borderRadius: 8,
+                background: 'var(--bg)',
+                border: actError ? '2px solid var(--accent)' : 'var(--hairline)',
+              }}
+            >
+              <label style={{
+                fontFamily: 'var(--mono)',
+                fontSize: 11,
+                textTransform: 'uppercase',
+                color: actError ? 'var(--accent)' : 'var(--ink)',
+                display: 'block',
+                marginBottom: 12,
+                fontWeight: 600,
+                letterSpacing: '0.05em',
+              }}>
+                Activitats disponibles {form.escola ? `a ${form.escola} *` : '*'}
+              </label>
+
+              {!form.escola ? (
+                <p style={{ margin: 0, fontSize: 14, color: 'var(--muted)', fontStyle: 'italic' }}>
+                  Selecciona primer una escola al desplegable superior per veure les activitats que s'hi fan.
+                </p>
+              ) : activitatsDisponibles.length === 0 ? (
+                <p style={{ margin: 0, fontSize: 14, color: 'var(--muted)' }}>
+                  No hi ha activitats registrades per a aquesta escola en aquest moment.
+                </p>
+              ) : (
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: 12 }}>
+                  {activitatsDisponibles.map((item, idx) => {
+                    const isSelected = form.activitats.includes(item.activitat);
+                    return (
+                      <div
+                        key={idx}
+                        onClick={() => toggleActivitat(item.activitat)}
+                        style={{
+                          padding: '14px 16px',
+                          borderRadius: 8,
+                          background: isSelected ? '#ffffff' : 'var(--paper)',
+                          border: isSelected ? '2px solid var(--accent)' : 'var(--hairline)',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'space-between',
+                          gap: 8,
+                          transition: 'all 0.18s ease',
+                          boxShadow: isSelected ? '0 4px 12px rgba(201, 71, 43, 0.12)' : 'none',
+                        }}
+                      >
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 8 }}>
+                          <strong style={{ fontSize: 15, color: 'var(--ink)', lineHeight: 1.3 }}>
+                            {item.activitat}
+                          </strong>
+                          <span style={{
+                            fontSize: 10,
+                            fontFamily: 'var(--mono)',
+                            fontWeight: 700,
+                            padding: '2px 7px',
+                            borderRadius: 4,
+                            background: isSelected ? 'var(--accent)' : 'var(--bg)',
+                            color: isSelected ? '#fff' : 'var(--muted)',
+                            whiteSpace: 'nowrap',
+                          }}>
+                            {isSelected ? '✓ TRIADA' : '+ TRIAR'}
+                          </span>
+                        </div>
+                        {(item.horari || item.preu) && (
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 12, color: 'var(--muted)', paddingTop: 6, borderTop: 'var(--hairline)' }}>
+                            <span>{item.horari}</span>
+                            {item.preu && <strong style={{ color: 'var(--accent)' }}>{item.preu.includes('€') ? item.preu : `${item.preu} €/mes`}</strong>}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+
+              {actError && (
+                <p style={{ color: 'var(--accent)', fontSize: 13, fontWeight: 600, margin: '10px 0 0', display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <AlertCircle size={15} /> Si us plau, selecciona almenys una activitat de l'escola.
+                </p>
+              )}
+            </div>
+
+            <h3 style={{ fontSize: 20, marginTop: 28, marginBottom: 16 }}>Dades dels Pares / Tutors i Domiciliació</h3>
+            <div className="form-grid-2">
+              <div className="field">
+                <label>Nom dels pares o tutors *</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="Nom complet del pare, mare o tutor/a"
+                  value={form.nomPares}
+                  onChange={(e) => updateField('nomPares', e.target.value)}
+                />
+              </div>
+
+              <div className="field">
+                <label>Telèfon de contacte *</label>
+                <input
+                  type="tel"
+                  required
+                  placeholder="+34 600 000 000"
+                  value={form.telefon}
+                  onChange={(e) => updateField('telefon', e.target.value)}
+                />
+              </div>
+
+              <div className="field">
+                <label>Adreça electrònica *</label>
+                <input
+                  type="email"
+                  required
+                  placeholder="correu@familia.cat"
+                  value={form.correu}
+                  onChange={(e) => updateField('correu', e.target.value)}
+                />
+              </div>
+
+              <div className="field">
+                <label>Número de compte per a domiciliació de rebut mensual (IBAN) *</label>
+                <input
+                  type="text"
+                  required
+                  autoComplete="off"
+                  data-lpignore="true"
+                  data-1p-ignore="true"
+                  data-form-type="other"
+                  spellCheck="false"
+                  placeholder="ES00 0000 0000 0000 0000 0000"
+                  value={form.iban}
+                  onChange={(e) => updateField('iban', e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div style={{ marginTop: 20 }}>
+              <label style={{ display: 'flex', alignItems: 'flex-start', gap: 10, cursor: 'pointer', fontSize: 14 }}>
+                <input
+                  type="checkbox"
+                  required
+                  checked={form.acceptaTermes}
+                  onChange={(e) => updateField('acceptaTermes', e.target.checked)}
+                  style={{ accentColor: 'var(--accent)', width: 17, height: 17, marginTop: 2 }}
+                />
+                <span>Accepto les condicions d'inscripció, la domiciliació dels rebuts mensuals i la política de protecció de dades de Claudefaula. *</span>
+              </label>
+            </div>
+
+            <button
+              type="submit"
+              disabled={isSending}
+              className="btn"
+              style={{ marginTop: 28, background: 'var(--accent)', color: '#fff' }}
+            >
+              {isSending ? 'Enviant inscripció…' : 'Enviar Inscripció Escolar →'}
+            </button>
+          </form>
+        </div>
+      </section>
+
+      {/* ESCOLES ON TREBALLEM ACTUALMENT (SINCRONITZAT AMB EL SHEETS) */}
+      <section className="section" style={{ background: 'var(--paper)', borderTop: 'var(--hairline)', borderBottom: 'var(--hairline)', padding: 'clamp(40px, 6vw, 80px) var(--pad)' }}>
+        <div style={{ maxWidth: '1440px', margin: '0 auto' }}>
+          <div className="section-head reveal" style={{ marginBottom: '40px' }}>
+            <span className="eyebrow">— Xarxa d'escoles</span>
+            <h2 className="serif" style={{ fontSize: 'clamp(32px, 4vw, 52px)' }}>Escoles on <em>col·laborem</em></h2>
+            <p className="lede" style={{ color: 'var(--muted)' }}>Clica a la teva escola per seleccionar-la directament al formulari d'inscripció.</p>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
+            {escolesResum.map((esc, i) => (
+              <div
+                key={i}
+                className="card reveal"
+                onClick={() => {
+                  handleSelectEscola(esc.nom);
+                  const el = document.getElementById('formulari-escoles');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+                style={{
+                  padding: '24px',
+                  background: form.escola === esc.nom ? '#fff' : 'var(--bg)',
+                  border: form.escola === esc.nom ? '2px solid var(--accent)' : 'var(--hairline)',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                }}
+              >
+                {esc.ciutat && <span className="course-price-badge" style={{ marginBottom: '12px', display: 'inline-block' }}>{esc.ciutat}</span>}
+                <h4 style={{ fontSize: '18px', margin: '4px 0 8px', fontWeight: 600 }}>{esc.nom}</h4>
+                <p style={{ fontSize: '13px', color: 'var(--muted)', margin: 0, lineHeight: 1.5 }}>
+                  {esc.activitats.join(' · ')}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -1446,29 +1974,8 @@ function Escoles({ setPage }) {
         </div>
       </section>
 
-      {/* ESCOLES ON TREBALLEM ACTUALMENT */}
-      <section className="section" style={{ background: 'var(--paper)', borderTop: 'var(--hairline)', borderBottom: 'var(--hairline)', padding: 'clamp(40px, 6vw, 80px) var(--pad)' }}>
-        <div style={{ maxWidth: '1440px', margin: '0 auto' }}>
-          <div className="section-head reveal" style={{ marginBottom: '40px' }}>
-            <span className="eyebrow">— Xarxa d'escoles</span>
-            <h2 className="serif" style={{ fontSize: 'clamp(32px, 4vw, 52px)' }}>Escoles de primària on <em>col·laborem</em></h2>
-            <p className="lede" style={{ color: 'var(--muted)' }}>Treballem colze a colze amb les escoles i AFAs de Girona, Sta. Eugènia, Banyoles i comarca.</p>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
-            {escolesActuals.map((esc, i) => (
-              <div key={i} className="card reveal" style={{ padding: '24px', background: 'var(--bg)', border: 'var(--hairline)', borderRadius: '8px' }}>
-                <span className="course-price-badge" style={{ marginBottom: '12px', display: 'inline-block' }}>{esc.ciutat}</span>
-                <h4 style={{ fontSize: '18px', margin: '4px 0 8px', fontWeight: 600 }}>{esc.nom}</h4>
-                <p style={{ fontSize: '13px', color: 'var(--muted)', margin: 0 }}>{esc.detall}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* CALL TO ACTION D'AFA I ESCOLES */}
-      <section className="section" style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto', padding: 'clamp(60px, 8vw, 120px) var(--pad)' }}>
+      <section className="section" style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto', padding: 'clamp(40px, 6vw, 100px) var(--pad)' }}>
         <span className="eyebrow">— Vols portar Claudefaula a la teva escola?</span>
         <h2 className="serif" style={{ fontSize: 'clamp(32px, 4vw, 52px)', margin: '16px 0 24px' }}>Implantem el projecte musical a la teva <em>escola o AFA</em></h2>
         <p style={{ color: 'var(--muted)', fontSize: '18px', marginBottom: '32px' }}>
