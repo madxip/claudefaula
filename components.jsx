@@ -215,7 +215,7 @@ function Footer({ setPage }) {
                   Política de <em>Privacitat</em> i Protecció de Dades
                 </h3>
                 <div style={{ fontSize: 14, color: 'var(--ink-2)', lineHeight: 1.6, display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  <p style={{ margin: 0 }}><strong>Responsable del tractament:</strong> Claudefaula — Escola de Música i Arts (C/ Campcardós, 39, 17005 Girona · Camí Can Boada, 24, 17820 Banyoles · <a href="mailto:info@claudefaula.cat" style={{ color: 'var(--accent)' }}>info@claudefaula.cat</a>).</p>
+                  <p style={{ margin: 0 }}><strong>Responsable del tractament:</strong> Claudefaula — Escola de Música i Arts (C/ Campcardós, 39, 17005 Girona · Camí Can Boada, 61, 17820 Banyoles · <a href="mailto:info@claudefaula.cat" style={{ color: 'var(--accent)' }}>info@claudefaula.cat</a>).</p>
                   <p style={{ margin: 0 }}><strong>Finalitat:</strong> Gestionar les sol·licituds d'informació, inscripcions acadèmiques, cobrament de rebuts domiciliats i comunicacions pedagògiques amb l'alumnat i les famílies.</p>
                   <p style={{ margin: 0 }}><strong>Legitimació:</strong> Execució de la relació educativa precontractual o contractual i consentiment exprés de la persona interessada o tutor/a legal (Reglament UE 2016/679 RGPD i LOPDGDD 3/2018).</p>
                   <p style={{ margin: 0 }}><strong>Destinataris i Conservació:</strong> Les dades no se cediran a tercers excepte per obligació legal o per a la gestió bancària dels rebuts. Es conservaran mentre duri la relació acadèmica i durant els terminis legals exigibles.</p>
@@ -228,7 +228,7 @@ function Footer({ setPage }) {
                   Avís <em>Legal</em>
                 </h3>
                 <div style={{ fontSize: 14, color: 'var(--ink-2)', lineHeight: 1.6, display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  <p style={{ margin: 0 }}>En compliment de la Llei 34/2002 (LSSI-CE), s'informa que el lloc web <strong>claudefaula.cat</strong> és titularitat de Claudefaula — Escola de Música i Arts, amb seus a C/ Campcardós, 39 (17005 Girona) i Camí Can Boada, 24 (17820 Banyoles), telèfon +34 972 24 50 47 i correu <a href="mailto:info@claudefaula.cat" style={{ color: 'var(--accent)' }}>info@claudefaula.cat</a>.</p>
+                  <p style={{ margin: 0 }}>En compliment de la Llei 34/2002 (LSSI-CE), s'informa que el lloc web <strong>claudefaula.cat</strong> és titularitat de Claudefaula — Escola de Música i Arts, amb seus a C/ Campcardós, 39 (17005 Girona) i Camí Can Boada, 61 (17820 Banyoles), telèfon +34 972 24 50 47 i correu <a href="mailto:info@claudefaula.cat" style={{ color: 'var(--accent)' }}>info@claudefaula.cat</a>.</p>
                   <p style={{ margin: 0 }}>Tots els continguts, imatges, dissenys i textos d'aquest lloc web estan protegits per drets de propietat intel·lectual. Queda prohibida la seva reproducció sense autorització prèvia.</p>
                 </div>
               </>
@@ -360,7 +360,7 @@ function TopBanner({ setPage, csvUrl = DEFAULT_BANNER_CSV_URL }) {
         const parsed = parseBannerCSV(text);
         if (parsed) setBanner(parsed);
       })
-      .catch(() => {});
+      .catch(() => { });
   }, [csvUrl]);
 
   const activeByDate = isDateActive(banner.dataInici, banner.dataFi);

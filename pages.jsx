@@ -260,7 +260,7 @@ function Contacte() {
               rel="noopener noreferrer"
               style={{ color: 'inherit', textDecoration: 'underline', textDecorationColor: 'var(--accent)' }}
             >
-              Camí Can Boada, 24
+              Camí Can Boada, 61
             </a><br />
             17820 — Banyoles
           </address>
@@ -786,7 +786,7 @@ function Inscripcio({ setPage }) {
     const payload = {
       tipusFormulari: 'INSCRIPCIO_CURS',
       timestamp: new Date().toLocaleString('ca-ES'),
-      seu: form.seu === 'girona' ? 'Girona (C/ Campcardós, 39)' : 'Banyoles (Camí Can Boada, 24)',
+      seu: form.seu === 'girona' ? 'Girona (C/ Campcardós, 39)' : 'Banyoles (Camí Can Boada, 61)',
       nomAlumne: form.nomAlumne.trim(),
       dataNaixement: form.dataNaixement.trim(),
       dniAlumne: form.dniAlumne.trim(),
@@ -860,7 +860,7 @@ function Inscripcio({ setPage }) {
         <span className="eyebrow" style={{ display: 'block', marginBottom: 16 }}>— Confirmació d'inscripció</span>
         <h1 className="serif" style={{ fontSize: 'clamp(36px, 5vw, 64px)', marginBottom: 16 }}>Inscripció <em>rebuda.</em></h1>
         <p className="lede" style={{ color: 'var(--muted)', fontSize: 20, marginBottom: 32 }}>
-          Gràcies per matricular-te a Claudefaula! Hem rebut la teva sol·licitud per a la seu de <strong>{form.seu === 'girona' ? 'Girona (C/ Campcardós, 39)' : 'Banyoles (Camí Can Boada, 24)'}</strong>. Et respondrem en menys de 48 hores per confirmar l'horari i els detalls del curs.
+          Gràcies per matricular-te a Claudefaula! Hem rebut la teva sol·licitud per a la seu de <strong>{form.seu === 'girona' ? 'Girona (C/ Campcardós, 39)' : 'Banyoles (Camí Can Boada, 61)'}</strong>. Et respondrem en menys de 48 hores per confirmar l'horari i els detalls del curs.
         </p>
         <button className="btn" onClick={() => { setSubmitted(false); setStep(1); setPage('home'); }}>
           Tornar a l'inici →
@@ -922,7 +922,7 @@ function Inscripcio({ setPage }) {
                   <input type="radio" name="seu" checked={form.seu === 'banyoles'} readOnly />
                   <div>
                     <strong>El Molí de Banyoles</strong>
-                    <p>Camí Can Boada, 24 — Banyoles</p>
+                    <p>Camí Can Boada, 61 — Banyoles</p>
                   </div>
                 </div>
               </div>

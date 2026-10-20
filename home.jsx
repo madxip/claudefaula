@@ -200,7 +200,7 @@ function Home({ setPage, tweaks }) {
         </h1>
         <div className="hero-sub">
           <p className="hero-lede reveal">
-            Música per a tothom: <strong>classes de piano, guitarra, cant, bateria, violí, sensibilització i música per a adults</strong>. Una escola de barri amb <em>màxima qualitat</em> educàtiva.
+            Música per a tothom: <strong>classes de piano, guitarra, cant, bateria, violí, sensibilització i música per a adults</strong>. Una escola de barri amb <em>màxima qualitat</em> educativa.
           </p>
           <div className="hero-cta">
             <button className="btn" onClick={() => setPage('inscripcio')}>Inscriu-te ara →</button>
@@ -257,7 +257,7 @@ function Home({ setPage, tweaks }) {
       </section>
 
       {/* CURSOS */}
-      <section id="cursos" className="cursos">
+      <section className="cursos">
         <div className="cursos-head">
           <h3>Què hi <em>fem.</em></h3>
           <span className="mono" style={{ color: 'var(--muted)', fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.06em' }}>0–99 anys</span>
@@ -302,7 +302,7 @@ function Home({ setPage, tweaks }) {
 
       {/* AGENDA */}
       {events.length > 0 && (
-        <section id="agenda" className="agenda">
+        <section className="agenda">
           <div className="agenda-head">
             <h3>Agenda <em>de curs.</em></h3>
             <div className="meta">{events.length} {events.length === 1 ? 'cita' : 'cites'}</div>
