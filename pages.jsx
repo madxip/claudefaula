@@ -1413,8 +1413,8 @@ const DEFAULT_ESCOLES_DATA = [
   { escola: 'Escola Baldiri Reixac', ciutat: 'Banyoles', activitat: 'Llenguatge i Instrument', horari: 'Extraescolar', preu: '', visible: 'Si' },
 ];
 
-// Quan creïs i publiquis la pestanya "Escoles" al Google Sheet com a CSV, pots enganxar aquí el seu enllaç o el seu gid:
-const ESCOLES_CSV_URL = import.meta.env.VITE_ESCOLES_CSV_URL || '';
+// Enllaç CSV publicat de la pestanya "Escoles" (gid=419728189):
+const ESCOLES_CSV_URL = import.meta.env.VITE_ESCOLES_CSV_URL || 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS6dn96ihqnjp5Rh_ti-xKcSD9BN2B0hxjOtc_c6sLDt-9O98PSh1sw32xxlUV4SBhxIg3FW7PdFCaH/pub?gid=419728189&single=true&output=csv';
 
 function parseEscolesCSV(text) {
   const lines = text.trim().replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n');
