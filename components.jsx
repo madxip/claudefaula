@@ -338,7 +338,9 @@ function parseBannerCSV(text) {
   return { visible: false };
 }
 
-function TopBanner({ setPage, csvUrl }) {
+const DEFAULT_BANNER_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS6dn96ihqnjp5Rh_ti-xKcSD9BN2B0hxjOtc_c6sLDt-9O98PSh1sw32xxlUV4SBhxIg3FW7PdFCaH/pub?gid=741259203&single=true&output=csv';
+
+function TopBanner({ setPage, csvUrl = DEFAULT_BANNER_CSV_URL }) {
   const [dismissed, setDismissed] = useState(false);
   const [banner, setBanner] = useState({
     visible: true,
@@ -352,7 +354,7 @@ function TopBanner({ setPage, csvUrl }) {
 
   useEffect(() => {
     if (!csvUrl) return;
-    fetch(csvUrl)
+    fetch(`${csvUrl}&_t=${Date.now()}`, { cache: 'no-store' })
       .then(r => r.ok ? r.text() : Promise.reject(r.status))
       .then(text => {
         const parsed = parseBannerCSV(text);

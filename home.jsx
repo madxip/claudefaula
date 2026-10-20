@@ -60,7 +60,7 @@ const CHIPS = [
 ];
 
 // ─── AGENDA · Google Sheets ───────────────────────────────────────────────
-const AGENDA_CSV_URL = '';
+const AGENDA_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS6dn96ihqnjp5Rh_ti-xKcSD9BN2B0hxjOtc_c6sLDt-9O98PSh1sw32xxlUV4SBhxIg3FW7PdFCaH/pub?gid=0&single=true&output=csv';
 
 function parseCSVLine(line) {
   const cols = [];
@@ -107,7 +107,7 @@ function Home({ setPage, tweaks }) {
   const [events, setEvents] = useState([]);
   useEffect(() => {
     if (!AGENDA_CSV_URL || AGENDA_CSV_URL.startsWith('ENGANXA')) return;
-    fetch(AGENDA_CSV_URL)
+    fetch(`${AGENDA_CSV_URL}&_t=${Date.now()}`, { cache: 'no-store' })
       .then(r => r.ok ? r.text() : Promise.reject(r.status))
       .then(text => setEvents(parseAgendaCSV(text)))
       .catch(() => setEvents([]));

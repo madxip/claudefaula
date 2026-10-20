@@ -666,15 +666,15 @@ function Inscripcio({ setPage }) {
     const PREUS_CSV_ALT = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
     const INSTRUMENTS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS6dn96ihqnjp5Rh_ti-xKcSD9BN2B0hxjOtc_c6sLDt-9O98PSh1sw32xxlUV4SBhxIg3FW7PdFCaH/pub?gid=2066170543&single=true&output=csv';
 
-    fetch(PREUS_CSV_URL)
-      .then(r => r.ok ? r.text() : fetch(PREUS_CSV_ALT).then(r2 => r2.ok ? r2.text() : Promise.reject(r2.status)))
+    fetch(`${PREUS_CSV_URL}&_t=${Date.now()}`, { cache: 'no-store' })
+      .then(r => r.ok ? r.text() : fetch(`${PREUS_CSV_ALT}&_t=${Date.now()}`, { cache: 'no-store' }).then(r2 => r2.ok ? r2.text() : Promise.reject(r2.status)))
       .then(text => {
         const parsed = parsePreusCSV(text);
         if (parsed) setPreusList(parsed);
       })
       .catch(() => { });
 
-    fetch(INSTRUMENTS_CSV_URL)
+    fetch(`${INSTRUMENTS_CSV_URL}&_t=${Date.now()}`, { cache: 'no-store' })
       .then(r => r.ok ? r.text() : Promise.reject(r.status))
       .then(text => {
         const parsed = parseInstrumentsCSV(text);
