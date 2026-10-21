@@ -2043,7 +2043,7 @@ function Escoles({ setPage }) {
         <div className="grid-2 gap-lg" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
           {activitatsEscoles.map((act, idx) => (
             <div key={idx} className="card reveal" style={{ padding: '26px', background: 'var(--paper)', border: 'var(--hairline)', borderRadius: '8px', display: 'flex', flexDirection: 'column', gap: 10 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 10 }}>
                 <h3 className="serif" style={{ fontSize: '24px', margin: 0 }}>{act.title}</h3>
                 {act.age && (
                   <span style={{
