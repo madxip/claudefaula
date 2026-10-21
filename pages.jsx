@@ -1617,10 +1617,46 @@ function Escoles({ setPage }) {
   };
 
   const activitatsEscoles = [
-    { title: 'Sensibilització Musical en Horari Lectiu', desc: 'Projectes d\'iniciació al ritme, la cançó i l\'expressió corporal per a educació infantil (I2 a I5).' },
-    { title: 'Extraescolars de Llenguatge i Instrument', desc: 'Classes de música en grups reduïts i instrument col·lectiu a la mateixa escola al migdia o en acabar les classes.' },
-    { title: 'Cant Coral a la Primària', desc: 'Creació i direcció de corals d\'escola integradores per a infants de 6 a 14 anys (Cant Coral Social).' },
-    { title: 'Tallers de Teatre Musical i Moviment', desc: 'Tallers d\'expressió artística, teatre i cant combinats per a la comunitat escolar.' },
+    {
+      title: 'Sensibilització',
+      age: 'A partir de 3 anys',
+      desc: 'Primera aproximació al món sonor. Eines per a l\'expressió i la comunicació a través del cant, el moviment i el joc amb petits instruments.',
+    },
+    {
+      title: 'Dansa',
+      age: 'A partir de 3 anys',
+      desc: 'Expressió estètica i artística a través del cos. Coneixement corporal i possibilitats expressives i comunicatives a través de tot tipus de música.',
+    },
+    {
+      title: 'Roda d\'instruments',
+      age: 'A partir de 3 anys',
+      desc: 'Tast de diferents instruments per trimestres en sessions col·lectives de 30\' (vent - corda - percussió).',
+    },
+    {
+      title: 'Llenguatge',
+      age: 'A partir de 6 anys',
+      desc: 'Fer música amb una primera codificació simple del llenguatge musical sempre a través de la pràctica i el dinamisme.',
+    },
+    {
+      title: 'Cant Coral',
+      age: 'A partir de 6 anys',
+      desc: 'Descoberta de repertori, exploració de la pròpia veu, goig de cantar plegats. L\'activitat més inclusiva per naturalesa.',
+    },
+    {
+      title: 'Teatre musical',
+      age: 'A partir de 6 anys',
+      desc: 'Treball d\'arts escèniques a través del cant i la dansa. Petites produccions i improvisacions. Perdre la por a l\'escena, desenvolupar les pròpies capacitats expressives i comunicatives. Treball de cohesió de grup.',
+    },
+    {
+      title: 'Conjunt instrumental',
+      age: 'A partir de 6 anys',
+      desc: 'Fer música en conjunt és un dels plaers més grans que podem tenir. Buscar un resultat comú com a suma de l\'esforç individual de cadascú.',
+    },
+    {
+      title: 'Instruments',
+      age: 'A partir de 6 anys',
+      desc: 'Inici a l\'estudi d\'un instrument: ukelele, guitarra, flauta de bec, violí, piano (si n\'hi ha a l\'escola). Classes col·lectives des de 3 alumnes, 45\' setmanals. Instrument a càrrec de l\'alumne.',
+    },
   ];
 
   if (submitted) {
@@ -1644,10 +1680,29 @@ function Escoles({ setPage }) {
         <div className="page-hero-inner">
           <h1>Claudefaula a les <em>Escoles</em></h1>
           <div className="page-hero-side">
-            <span className="eyebrow">— Educació i Comunitat</span>
+            <span className="eyebrow">— Educació i Comunitat · Curs 2026–2027</span>
             <p className="lede reveal">
-              Portem la música i les arts escèniques a les escoles de primària. Inscriu-te a les activitats extraescolars de la teva escola o consulta els centres on col·laborem.
+              Portem la música i les arts escèniques a les escoles. Inscriu-te a les activitats extraescolars de la teva escola o descarrega el díptic informatiu complet.
             </p>
+            <div style={{ marginTop: 20, display: 'flex', flexWrap: 'wrap', gap: 12 }}>
+              <a
+                href={`${import.meta.env.BASE_URL}diptic_extraescolars_26_27.pdf`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  background: 'var(--paper)',
+                  color: 'var(--ink)',
+                  border: 'var(--hairline)',
+                  textDecoration: 'none',
+                }}
+              >
+                <FileText size={16} /> Veure Díptic Extraescolars 26–27 (PDF) ↗
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -1961,19 +2016,126 @@ function Escoles({ setPage }) {
         </div>
       </section>
 
-      {/* ACTIVITATS QUE OFERIM A LES ESCOLES */}
+      {/* ACTIVITATS QUE OFERIM A LES ESCOLES (DÍPTIC 26-27) */}
       <section className="section" style={{ padding: 'clamp(40px, 6vw, 80px) var(--pad)', maxWidth: '1440px', margin: '0 auto' }}>
-        <div className="section-head reveal">
-          <span className="eyebrow">— Què fem a les escoles</span>
-          <h2 className="serif" style={{ fontSize: 'clamp(32px, 4vw, 52px)', marginBottom: '32px' }}>Activitats i projectes <em>educatius</em></h2>
+        <div className="section-head reveal" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: 16, marginBottom: '32px' }}>
+          <div>
+            <span className="eyebrow">— Què fem a les escoles · Curs 2026–2027</span>
+            <h2 className="serif" style={{ fontSize: 'clamp(32px, 4vw, 52px)', margin: '8px 0 0' }}>Activitats i projectes <em>educatius</em></h2>
+          </div>
+          <a
+            href={`${import.meta.env.BASE_URL}diptic_extraescolars_26_27.pdf`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 8,
+              background: 'var(--accent)',
+              color: '#fff',
+              textDecoration: 'none',
+            }}
+          >
+            <FileText size={16} /> Descarregar Díptic 26–27 (PDF) ↗
+          </a>
         </div>
-        <div className="grid-2 gap-lg" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
+        <div className="grid-2 gap-lg" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
           {activitatsEscoles.map((act, idx) => (
-            <div key={idx} className="card reveal" style={{ padding: '28px', background: 'var(--paper)', border: 'var(--hairline)', borderRadius: '8px' }}>
-              <h3 className="serif" style={{ fontSize: '24px', margin: '0 0 12px' }}>{act.title}</h3>
+            <div key={idx} className="card reveal" style={{ padding: '26px', background: 'var(--paper)', border: 'var(--hairline)', borderRadius: '8px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                <h3 className="serif" style={{ fontSize: '24px', margin: 0 }}>{act.title}</h3>
+                {act.age && (
+                  <span style={{
+                    fontFamily: 'var(--mono)',
+                    fontSize: '11px',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em',
+                    padding: '4px 10px',
+                    borderRadius: '999px',
+                    background: 'var(--bg)',
+                    border: 'var(--hairline)',
+                    color: 'var(--accent)',
+                    fontWeight: 600,
+                  }}>
+                    {act.age}
+                  </span>
+                )}
+              </div>
               <p style={{ color: 'var(--muted)', fontSize: '15px', lineHeight: '1.6', margin: 0 }}>{act.desc}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* METODOLOGIA, PROFESSIONALITAT I PREUS I CONDICIONS (DEL DÍPTIC 26-27) */}
+      <section className="section" style={{ background: 'var(--paper)', borderTop: 'var(--hairline)', borderBottom: 'var(--hairline)', padding: 'clamp(40px, 6vw, 80px) var(--pad)' }}>
+        <div style={{ maxWidth: '1440px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px', alignItems: 'stretch' }}>
+          {/* Metodologia i Professionalitat */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+            <div className="card reveal" style={{ padding: '32px', background: 'var(--bg)', border: 'var(--hairline)', borderRadius: '12px', flex: 1 }}>
+              <span className="eyebrow" style={{ color: 'var(--accent)' }}>— Com treballem</span>
+              <h3 className="serif" style={{ fontSize: '28px', margin: '8px 0 12px' }}>Metodologia</h3>
+              <p style={{ color: 'var(--muted)', fontSize: '15px', lineHeight: '1.65', margin: 0 }}>
+                Les classes són programades i realitzades de manera lúdica i des de la gamificació i la creativitat usades com a eina d'aprenentatge, conservant un clima de calma i control imprescindible per a avançar. Les propostes són diverses i es té present la diversitat del grup tant per edats com per a ritmes i evolucions, donant la millor resposta en cada cas. <strong>Informes a les famílies.</strong>
+              </p>
+            </div>
+
+            <div className="card reveal" style={{ padding: '32px', background: 'var(--bg)', border: 'var(--hairline)', borderRadius: '12px', flex: 1 }}>
+              <span className="eyebrow" style={{ color: 'var(--accent)' }}>— Equip docent</span>
+              <h3 className="serif" style={{ fontSize: '28px', margin: '8px 0 12px' }}>Professionalitat</h3>
+              <p style={{ color: 'var(--muted)', fontSize: '15px', lineHeight: '1.65', margin: 0 }}>
+                Les persones que imparteixen les activitats són pedagogs, músics i professionals en actiu, en formació constant i amb especial sensibilització pedagògica.
+              </p>
+            </div>
+          </div>
+
+          {/* Preus i condicions */}
+          <div className="card reveal" style={{ padding: '36px', background: 'var(--ink)', color: 'var(--bg)', borderRadius: '12px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div>
+              <span className="eyebrow" style={{ color: 'var(--accent)' }}>— Curs 2026–2027</span>
+              <h3 className="serif" style={{ fontSize: 'clamp(28px, 3vw, 38px)', margin: '8px 0 24px', color: 'var(--bg)' }}>
+                Preus i <em>Condicions</em>
+              </h3>
+
+              <div style={{ padding: '20px', background: 'rgba(255,255,255,0.06)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.12)', marginBottom: '16px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '12px', flexWrap: 'wrap', marginBottom: '8px' }}>
+                  <strong style={{ fontSize: '16px', color: '#fff' }}>Activitats col·lectives i grupals</strong>
+                  <span className="serif" style={{ fontSize: '28px', color: 'var(--accent)', fontWeight: 700 }}>25 € <small style={{ fontSize: '14px', fontWeight: 400, color: 'rgba(255,255,255,0.75)' }}>/ mes per alumne*</small></span>
+                </div>
+                <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.78)', lineHeight: 1.55, margin: '0 0 8px' }}>
+                  Sensibilització, Llenguatge, Cant Coral, Teatre musical, Dansa, Conjunt instrumental i Cant Coral adults (mínim de 8 persones).
+                </p>
+                <span style={{ fontFamily: 'var(--mono)', fontSize: '11px', textTransform: 'uppercase', color: 'var(--accent)', letterSpacing: '0.04em' }}>
+                  ✓ Inclou sessió oberta a final de curs escolar
+                </span>
+              </div>
+
+              <div style={{ padding: '20px', background: 'rgba(255,255,255,0.06)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.12)', marginBottom: '16px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '12px', flexWrap: 'wrap', marginBottom: '8px' }}>
+                  <strong style={{ fontSize: '16px', color: '#fff' }}>Roda d'instruments i Instrument col·lectiu</strong>
+                  <span className="serif" style={{ fontSize: '28px', color: 'var(--accent)', fontWeight: 700 }}>15 € <small style={{ fontSize: '14px', fontWeight: 400, color: 'rgba(255,255,255,0.75)' }}>/ mes per alumne*</small></span>
+                </div>
+                <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.78)', lineHeight: 1.55, margin: 0 }}>
+                  Roda d'instruments i classes col·lectives d'instrument (grups de 6 persones, sessions de 30').
+                </p>
+              </div>
+            </div>
+
+            <div style={{ borderTop: '1px solid rgba(255,255,255,0.15)', paddingTop: '16px', marginTop: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+              <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.7)', fontStyle: 'italic', margin: 0 }}>
+                * Si el grup és de menys alumnes s'adaptarà la quota.
+              </p>
+              <a
+                href={`${import.meta.env.BASE_URL}diptic_extraescolars_26_27.pdf`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: '#fff', fontSize: '13px', fontFamily: 'var(--mono)', textDecoration: 'underline' }}
+              >
+                Veure díptic original (PDF) ↗
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
