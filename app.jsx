@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { NavBar, TopBanner, Footer } from './components.jsx';
 import { Home } from './home.jsx';
-import { Escola, Professorat, Contacte, Inscripcio, Escoles } from './pages.jsx';
+import { Escola, Professorat, Contacte, Inscripcio, Escoles, Empreses } from './pages.jsx';
 import {
   useTweaks, TweaksPanel, TweakSection,
   TweakColor, TweakToggle, TweakSelect, TweakRadio, TweakButton,
@@ -38,6 +38,7 @@ const PAGE_ROUTES = {
   '/': 'home',
   '/escola': 'escola',
   '/escoles': 'escoles',
+  '/empreses': 'empreses',
   '/professorat': 'professorat',
   '/inscripcio': 'inscripcio',
   '/contacte': 'contacte',
@@ -47,6 +48,7 @@ const PAGE_PATHS = {
   'home': '/',
   'escola': '/escola',
   'escoles': '/escoles',
+  'empreses': '/empreses',
   'professorat': '/professorat',
   'inscripcio': '/inscripcio',
   'contacte': '/contacte',
@@ -100,6 +102,12 @@ const SEO_DATA = {
     description: "Projectes educatius, tallers i activitats musicals per a escoles, instituts i centres educatius de Girona i el Pla de l'Estany.",
     keywords: "musica a les escoles girona, tallers de musica escoles banyoles, extraescolars escoles girona",
     canonical: "https://claudefaula.cat/escoles",
+  },
+  empreses: {
+    title: "Música a l'Empresa — Claudefaula | Benestar i Classes de Música al Treball",
+    description: "Programa Música a l'Empresa de Claudefaula a Girona i Banyoles. Classes d'instrument individuals de 30 minuts al migdia al lloc de treball per al benestar i la creativitat de l'equip.",
+    keywords: "musica a l'empresa girona, benestar laboral musica, classes de musica empreses banyoles, formacio musical treballadors, claudefaula empreses",
+    canonical: "https://claudefaula.cat/empreses",
   },
   professorat: {
     title: "Professorat i Equip Docent — Claudefaula | Girona i Banyoles",
@@ -212,6 +220,7 @@ function App() {
   switch (page) {
     case 'escola': Page = Escola; break;
     case 'escoles': Page = Escoles; break;
+    case 'empreses': Page = Empreses; break;
     case 'professorat': Page = Professorat; break;
     case 'contacte': Page = Contacte; break;
     case 'inscripcio': Page = Inscripcio; break;
@@ -255,6 +264,7 @@ function App() {
         <TweakButton onClick={() => setPage('home')}>Inici</TweakButton>
         <TweakButton onClick={() => setPage('escola')}>L'Escola</TweakButton>
         <TweakButton onClick={() => setPage('escoles')}>A les escoles</TweakButton>
+        <TweakButton onClick={() => setPage('empreses')}>A l'empresa</TweakButton>
         <TweakButton onClick={() => setPage('professorat')}>Professorat</TweakButton>
         <TweakButton onClick={() => setPage('inscripcio')}>Inscripció</TweakButton>
         <TweakButton onClick={() => setPage('contacte')}>Contacte</TweakButton>

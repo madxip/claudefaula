@@ -13,6 +13,7 @@ function NavBar({ page, setPage, tweaks }) {
     { id: 'home', label: 'Inici', path: getFullPath('/') },
     { id: 'escola', label: 'L\'Escola', path: getFullPath('/escola') },
     { id: 'escoles', label: 'A les escoles', path: getFullPath('/escoles') },
+    { id: 'empreses', label: 'A l\'empresa', path: getFullPath('/empreses') },
     { id: 'professorat', label: 'Professorat', path: getFullPath('/professorat') },
     { id: 'inscripcio', label: 'Inscripció', path: getFullPath('/inscripcio') },
     { id: 'contacte', label: 'Contacte', path: getFullPath('/contacte') },
@@ -127,6 +128,7 @@ function Footer({ setPage }) {
           <ul>
             <li><a href={getFullPath('/escola')} onClick={(e) => navigate(e, 'escola')}>L'ideari</a></li>
             <li><a href={getFullPath('/escoles')} onClick={(e) => navigate(e, 'escoles')}>A les escoles</a></li>
+            <li><a href={getFullPath('/empreses')} onClick={(e) => navigate(e, 'empreses')}>A l'empresa</a></li>
             <li><a href={getFullPath('/professorat')} onClick={(e) => navigate(e, 'professorat')}>Professorat</a></li>
             <li><a href={getFullPath('/contacte')} onClick={(e) => navigate(e, 'contacte')}>Aules i seus</a></li>
           </ul>
@@ -402,6 +404,9 @@ function TopBanner({ setPage, csvUrl = DEFAULT_BANNER_CSV_URL }) {
       'història': 'escola',
       'escoles': 'escoles',
       'a les escoles': 'escoles',
+      'empreses': 'empreses',
+      'empresa': 'empreses',
+      'a l\'empresa': 'empreses',
       'professorat': 'professorat',
       'professors': 'professorat',
       'equip': 'professorat',

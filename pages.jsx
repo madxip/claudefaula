@@ -86,6 +86,8 @@ const PROFES = [
   { name: 'Joel Moreno', img: 'JoelMoreno.jpg', role: 'Professor de flauta travessera, cant, llenguatge musical i sensibilització musical', quote: 'La música vol molt de mimo.' },
   { name: 'Albert Mademont', img: 'AlbertMademont.jpg', role: 'Professor a Claudefaula Banyoles i a Claudefaula Girona de piano, llenguatge, combo i guitarra', quote: 'Aquí venim a aprendre però també a passar-nos-ho molt bé!' },
   { name: 'Andrea Jerónimo', img: 'AndreaJeronimo.jpg', role: 'Professora de... ', quote: 'Frase destacada' },
+  { name: 'Elena Birtwistle', img: 'ElenaBirtwistle.jpg', role: 'Professora de sensibilització infantil, cant coral i arpa', quote: 'Escoltem, experimentem i gaudim: així és com aprenem música.' },
+  { name: 'Cesc Coromines', img: 'CescCoromines.jpg', role: 'Professor de violoncel i cambra', quote: 'Tocar un instrument és com cuidar una planta: si la reges i et quedes mirant-la, no la veuràs créixer. Però si la vas regant dia rere dia, al cap d’un temps t’adonaràs que ha crescut.' },
 ];
 
 function Professorat() {
@@ -332,6 +334,7 @@ function Contacte() {
             >
               <option>Inscripció / matrícula</option>
               <option>Informació de cursos</option>
+              <option>Música a l'Empresa</option>
               <option>Projectes amb entitats / escoles</option>
               <option>Beques</option>
               <option>Altres</option>
@@ -1989,5 +1992,255 @@ function Escoles({ setPage }) {
   );
 }
 
-export { Escola, Professorat, Contacte, Inscripcio, Escoles, PreusTaula };
+function Empreses({ setPage }) {
+  useReveal();
+
+  const comFunciona = [
+    {
+      num: '01',
+      title: '30 minuts setmanals al migdia',
+      desc: 'Una classe setmanal de 30 minuts durant la franja del migdia, sense haver de desplaçar-se després de la jornada laboral ni renunciar al temps personal.'
+    },
+    {
+      num: '02',
+      title: 'Elecció de l’instrument',
+      desc: 'Al juliol organitzem una roda d’instruments perquè cada treballador pugui descobrir les diferents opcions i escollir la que més l’interessi.'
+    },
+    {
+      num: '03',
+      title: 'Aprenentatge personalitzat',
+      desc: 'Classes individuals adaptades al nivell, al ritme i als objectius de cada participant. No cal tenir experiència musical prèvia.'
+    },
+    {
+      num: '04',
+      title: 'Instruments a l’abast de tothom',
+      desc: 'Si el treballador no disposa d’instrument propi, oferim la possibilitat de llogar-lo directament a la nostra escola.'
+    }
+  ];
+
+  const beneficisTreballadors = [
+    {
+      k: 'Benestar i desconnexió',
+      v: 'La música ofereix una pausa de qualitat enmig de la jornada, un moment per sortir de la rutina, concentrar-se en una activitat creativa i dedicar temps a un mateix.'
+    },
+    {
+      k: 'Creixement personal',
+      v: 'Aprendre un instrument és un repte estimulant que ajuda a desenvolupar la constància, la concentració, la paciència i la confiança en les pròpies capacitats.'
+    },
+    {
+      k: 'Una afició que s’adapta a la seva vida',
+      v: 'En situar les classes dins de l’horari del migdia, facilitem que els treballadors puguin gaudir de la música sense afegir desplaçaments ni compromisos al final del dia.'
+    },
+    {
+      k: 'Descobrir noves passions',
+      v: 'No cal tenir experiència musical prèvia: només ganes d’aprendre, curiositat i il·lusió.'
+    }
+  ];
+
+  const beneficisEmpresa = [
+    {
+      k: 'Aposta pel benestar de les persones',
+      v: 'Oferir activitats que afavoreixen el desenvolupament personal és una manera de mostrar que l’empresa es preocupa pels seus equips més enllà de les responsabilitats professionals.'
+    },
+    {
+      k: 'Proposta de valor diferencial',
+      v: 'Música a l’Empresa amplia les iniciatives de benestar i els beneficis socials que l’organització posa a disposició dels seus treballadors.'
+    },
+    {
+      k: 'Motivació i compromís',
+      v: 'Facilitar experiències positives i oportunitats d’aprenentatge contribueix a crear un entorn laboral més enriquidor i a reforçar el vincle entre les persones i l’organització.'
+    },
+    {
+      k: 'Cultura empresarial més humana i creativa',
+      v: 'La música incorpora una dimensió cultural i emocional al dia a dia de l’empresa i transmet una manera d’entendre el treball que dóna valor a les persones, a les seves inquietuds i al seu creixement.'
+    }
+  ];
+
+  return (
+    <main className="empreses-page">
+      {/* HERO */}
+      <section className="page-hero">
+        <div className="page-hero-inner">
+          <h1>Música a <em>l'Empresa.</em></h1>
+          <div className="page-hero-side">
+            <span className="eyebrow">— Benestar, creativitat i creixement</span>
+            <p className="lede reveal">
+              Una pausa per desconnectar, aprendre i créixer a través de la música. I si la pausa del migdia es convertís en una oportunitat per descobrir un talent, despertar una nova passió i millorar el <em>benestar de l’equip</em>?
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* INTRODUCCIÓ */}
+      <section className="filosofia" style={{ borderTop: 'var(--hairline)' }}>
+        <div className="filosofia-grid">
+          <div>
+            <span className="eyebrow">§ La Proposta</span>
+            <h2 className="reveal" style={{ marginTop: 16 }}>
+              L’aprenentatge musical<br />
+              al <em>lloc de treball</em>.
+            </h2>
+            <div className="tag-list">
+              <span className="tag">Pausa de migdia</span>
+              <span className="tag">Sense desplaçaments</span>
+              <span className="tag">Classes individuals</span>
+              <span className="tag">Benestar laboral</span>
+            </div>
+          </div>
+          <div className="filosofia-body reveal">
+            <p>
+              Des de la nostra escola de música us proposem <strong>Música a l’Empresa</strong>, un programa que apropa l’aprenentatge musical al lloc de treball i transforma una estona del migdia en un espai per a la creativitat, la desconnexió i el creixement personal.
+            </p>
+            <p>
+              La iniciativa ofereix als treballadors la possibilitat d’<strong>aprendre a tocar l’instrument que més els agrada</strong>, sense haver de desplaçar-se després de la jornada laboral ni renunciar al seu temps personal.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* COM FUNCIONA */}
+      <section className="section" style={{ padding: 'clamp(48px, 6vw, 88px) var(--pad)', maxWidth: '1440px', margin: '0 auto' }}>
+        <div className="section-head reveal" style={{ marginBottom: 36 }}>
+          <span className="eyebrow">— Metodologia flexible</span>
+          <h2 className="serif" style={{ fontSize: 'clamp(32px, 4vw, 52px)', margin: '8px 0 12px' }}>Com <em>funciona?</em></h2>
+          <p className="lede" style={{ color: 'var(--muted)', maxWidth: '58ch' }}>
+            El programa s’adapta a la dinàmica de l’empresa i a les necessitats dels participants.
+          </p>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(270px, 1fr))', gap: 24 }}>
+          {comFunciona.map((item, i) => (
+            <div
+              key={i}
+              className="card reveal"
+              style={{
+                padding: '28px',
+                background: 'var(--paper)',
+                border: 'var(--hairline)',
+                borderRadius: 8,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                gap: 14
+              }}
+            >
+              <div>
+                <span className="mono" style={{ fontSize: 12, color: 'var(--accent)', fontWeight: 700 }}>{item.num}</span>
+                <h3 className="serif" style={{ fontSize: 24, margin: '8px 0 12px', fontWeight: 400 }}>{item.title}</h3>
+                <p style={{ color: 'var(--muted)', fontSize: 15, lineHeight: 1.6, margin: 0 }}>{item.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* QUÈ HI GUANYEN ELS TREBALLADORS I L'EMPRESA */}
+      <section style={{ background: 'var(--paper)', borderTop: 'var(--hairline)', borderBottom: 'var(--hairline)', padding: 'clamp(56px, 7vw, 100px) var(--pad)' }}>
+        <div style={{ maxWidth: '1440px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 'clamp(36px, 5vw, 64px)' }}>
+          {/* Columna Treballadors */}
+          <div>
+            <span className="eyebrow" style={{ color: 'var(--accent)' }}>— Per a les persones</span>
+            <h3 className="serif" style={{ fontSize: 'clamp(30px, 3.5vw, 44px)', margin: '8px 0 28px', fontWeight: 400 }}>
+              Què hi guanyen els <em>treballadors?</em>
+            </h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+              {beneficisTreballadors.map((b, i) => (
+                <div key={i} className="reveal" style={{ padding: '22px 24px', background: 'var(--bg)', border: 'var(--hairline)', borderRadius: 8 }}>
+                  <h4 style={{ fontSize: 17, margin: '0 0 8px', fontWeight: 600, color: 'var(--ink)' }}>
+                    0{i + 1} · {b.k}
+                  </h4>
+                  <p style={{ margin: 0, fontSize: 14.5, color: 'var(--muted)', lineHeight: 1.55 }}>{b.v}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Columna Empresa */}
+          <div>
+            <span className="eyebrow" style={{ color: 'var(--accent)' }}>— Per a l'organització</span>
+            <h3 className="serif" style={{ fontSize: 'clamp(30px, 3.5vw, 44px)', margin: '8px 0 28px', fontWeight: 400 }}>
+              Què hi guanya <em>l’empresa?</em>
+            </h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+              {beneficisEmpresa.map((b, i) => (
+                <div key={i} className="reveal" style={{ padding: '22px 24px', background: 'var(--bg)', border: 'var(--hairline)', borderRadius: 8 }}>
+                  <h4 style={{ fontSize: 17, margin: '0 0 8px', fontWeight: 600, color: 'var(--ink)' }}>
+                    0{i + 1} · {b.k}
+                  </h4>
+                  <p style={{ margin: 0, fontSize: 14.5, color: 'var(--muted)', lineHeight: 1.55 }}>{b.v}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* COST COMPARTIT / PREU */}
+      <section className="section" style={{ padding: 'clamp(56px, 7vw, 100px) var(--pad)', maxWidth: '1080px', margin: '0 auto' }}>
+        <div
+          className="reveal"
+          style={{
+            background: 'var(--paper)',
+            border: 'var(--hairline)',
+            borderLeft: '4px solid var(--accent)',
+            borderRadius: 12,
+            padding: 'clamp(28px, 5vw, 52px)',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.04)'
+          }}
+        >
+          <span className="eyebrow" style={{ color: 'var(--accent)', fontWeight: 600 }}>— Un projecte compartit, amb un cost compartit</span>
+          <h2 className="serif" style={{ fontSize: 'clamp(30px, 4vw, 46px)', margin: '8px 0 16px', fontWeight: 400 }}>
+            Accessible i <em>motivador</em> per a totes dues parts
+          </h2>
+          <p style={{ fontSize: 16, color: 'var(--ink-2)', lineHeight: 1.6, maxWidth: '65ch', margin: '0 0 32px' }}>
+            Volem que aprendre música sigui una oportunitat accessible i motivadora. Per això, el cost del programa es reparteix entre l’empresa i cada treballador, de manera que totes dues parts participen en aquesta iniciativa de benestar.
+          </p>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: 20, marginBottom: 24 }}>
+            <div style={{ background: 'var(--ink)', color: 'var(--bg)', padding: '24px', borderRadius: 8 }}>
+              <span className="mono" style={{ fontSize: 11, textTransform: 'uppercase', opacity: 0.8 }}>Quota total per participant</span>
+              <div className="serif" style={{ fontSize: 44, lineHeight: 1.1, margin: '8px 0 4px' }}>95 € <span style={{ fontSize: 18 }}>/ mes</span></div>
+              <span style={{ fontSize: 13, opacity: 0.85 }}>1 classe individual setmanal (30 min)</span>
+            </div>
+
+            <div style={{ background: 'var(--bg)', border: 'var(--hairline)', padding: '24px', borderRadius: 8 }}>
+              <span className="mono" style={{ fontSize: 11, textTransform: 'uppercase', color: 'var(--accent)', fontWeight: 600 }}>50% A càrrec de l'empresa</span>
+              <div className="serif" style={{ fontSize: 40, lineHeight: 1.1, margin: '8px 0 4px', color: 'var(--ink)' }}>47,50 € <span style={{ fontSize: 17, color: 'var(--muted)' }}>/ mes</span></div>
+              <span style={{ fontSize: 13, color: 'var(--muted)' }}>Inversió en benestar i equip</span>
+            </div>
+
+            <div style={{ background: 'var(--bg)', border: 'var(--hairline)', padding: '24px', borderRadius: 8 }}>
+              <span className="mono" style={{ fontSize: 11, textTransform: 'uppercase', color: 'var(--accent)', fontWeight: 600 }}>50% A càrrec del treballador</span>
+              <div className="serif" style={{ fontSize: 40, lineHeight: 1.1, margin: '8px 0 4px', color: 'var(--ink)' }}>47,50 € <span style={{ fontSize: 17, color: 'var(--muted)' }}>/ mes</span></div>
+              <span style={{ fontSize: 13, color: 'var(--muted)' }}>Formació musical personalitzada</span>
+            </div>
+          </div>
+
+          <p style={{ margin: 0, fontSize: 13.5, color: 'var(--muted)', fontStyle: 'italic' }}>
+            * El lloguer de l’instrument, si és necessari, es pot valorar a part segons l’instrument escollit.
+          </p>
+        </div>
+      </section>
+
+      {/* TANCAMENT I CALL TO ACTION */}
+      <section className="section" style={{ textAlign: 'center', maxWidth: '820px', margin: '0 auto', padding: 'clamp(32px, 6vw, 96px) var(--pad)' }}>
+        <span className="eyebrow">— Posem música al dia a dia de la vostra empresa?</span>
+        <h2 className="serif" style={{ fontSize: 'clamp(32px, 4.5vw, 54px)', margin: '14px 0 20px' }}>
+          Fem que la música també formi part de la <em>vostra jornada!</em>
+        </h2>
+        <p style={{ color: 'var(--ink-2)', fontSize: 17, lineHeight: 1.6, marginBottom: 16 }}>
+          Des de la nostra escola ens encarreguem de l’acompanyament musical i de l’organització de les classes perquè l’experiència sigui propera, flexible i enriquidora.
+        </p>
+        <p style={{ color: 'var(--muted)', fontSize: 16, lineHeight: 1.6, marginBottom: 32 }}>
+          <strong>Música a l’Empresa</strong> és molt més que aprendre a tocar un instrument: és regalar temps de qualitat, obrir la porta a noves experiències i fer que la música formi part de la vida de les persones, també dins de l’entorn laboral. Us convidem a descobrir com podem fer sonar aquest projecte a la vostra empresa.
+        </p>
+        <button className="btn" style={{ background: 'var(--accent)', color: '#fff' }} onClick={() => setPage('contacte')}>
+          Sol·licita informació per a la teva empresa →
+        </button>
+      </section>
+    </main>
+  );
+}
+
+export { Escola, Professorat, Contacte, Inscripcio, Escoles, Empreses, PreusTaula };
 

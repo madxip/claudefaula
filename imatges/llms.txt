@@ -87,6 +87,14 @@ Claudefaula col·labora amb escoles de primària i AFAs de Girona i el Pla de l'
 
 ---
 
+## Música a l'Empresa (Benestar i Formació Musical al Lloc de Treball)
+
+Programa que apropa l'aprenentatge musical al lloc de treball durant la pausa del migdia:
+- **Funcionament**: 1 classe individual setmanal de 30 minuts al migdia, roda d'instruments al juliol per escollir especialitat, aprenentatge personalitzat i opció de lloguer d'instrument a l'escola.
+- **Cost compartit (95 €/mes per participant)**: 47,50 €/mes a càrrec de l'empresa i 47,50 €/mes a càrrec del treballador.
+
+---
+
 ## Equip Directiu i Docent
 
 - **Co-direcció**: Clara Cruz, Marta Cruz i Glòria Bonal.
@@ -96,6 +104,7 @@ Claudefaula col·labora amb escoles de primària i AFAs de Girona i el Pla de l'
 - Inici: https://claudefaula.cat/
 - L'Escola (Història i Ideari): https://claudefaula.cat/escola
 - Música a les Escoles: https://claudefaula.cat/escoles
+- Música a l'Empresa: https://claudefaula.cat/empreses
 - Professorat i Equip: https://claudefaula.cat/professorat
 - Inscripció i Calculadora de Preus: https://claudefaula.cat/inscripcio
 - Contacte i Mapa de Seus: https://claudefaula.cat/contacte
