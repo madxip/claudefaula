@@ -82,7 +82,7 @@ const PROFES = [
   { name: 'Xavier Tudela', img: 'XavierTudela.jpg', role: 'Professor de piano, llenguatge musical, roda d\'instruments, cant i guitarra', quote: 'Atura\'t, pensa i després toca!' },
   { name: 'Joan Remacha', img: 'JoanRemacha.jpg', role: 'Professor de trompeta', quote: 'Sempre s\'ha d\'estar disposat a aprendre.' },
   { name: 'Rita Cantó', img: 'RitaCanto.jpg', role: 'Professora de sensibilització musical, violí i teatre musical', quote: 'Prova-ho i després ja veurem què passa.' },
-  { name: 'Jaume Sureda', img: 'JaumeSureda.jpg', role: 'Professor de guitarra, bateria, llenguatge musical i combo', quote: 'Frase destacada.' },
+  { name: 'Jaume Sureda', img: 'JaumeSureda.jpg', role: 'Professor de guitarra, bateria, llenguatge musical i combo', quote: 'No busquis la perfecció, sinó el que vegis que realment sona millor.' },
   { name: 'Joel Moreno', img: 'JoelMoreno.jpg', role: 'Professor de flauta travessera, cant, llenguatge musical i sensibilització musical', quote: 'La música vol molt de mimo.' },
   { name: 'Albert Mademont', img: 'AlbertMademont.jpg', role: 'Professor a Claudefaula Banyoles i a Claudefaula Girona de piano, llenguatge, combo i guitarra', quote: 'Aquí venim a aprendre però també a passar-nos-ho molt bé!' },
   { name: 'Andrea Jerónimo', img: 'AndreaJeronimo.jpg', role: 'Professora de cant, piano, guitarra, sensibilització musical ', quote: 'Frase destacada' },
