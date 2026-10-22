@@ -191,7 +191,7 @@ function Home({ setPage, tweaks }) {
           <path d="M27.5,62.8c-6.2,4.7-11.2,8.2-26.9,12.8,26.7-15.1,36-30.7,35.6-52.7-.1-7.7-7.1-16.9-17.2-16.6-2.2,0-9.7-.8-15.7,9.2,1.3-.9,2.9-1.5,4.6-1.5,4.4,0,8,3.6,8,8s-3.6,8-8,8S0,26.2,0,21.8s.1-1.3.3-1.9h-.3C1,11.8,5.6,6.9,9,4.6,13.3,1.7,18.6-.2,23.8,0c17.9.7,21.5,15.7,22.2,20.6,2.7,19.1-8.2,34.6-18.4,42.2ZM60.1,7c-2.8,0-5.1,2.3-5.1,5.1s2.3,5.1,5.1,5.1,5.1-2.3,5.1-5.1c0-2.8-2.3-5.1-5.1-5.1ZM60.1,31c-2.8,0-5.1,2.3-5.1,5.1s2.3,5.1,5.1,5.1,5.1-2.3,5.1-5.1c0-2.8-2.3-5.1-5.1-5.1Z" />
         </svg>
         <div className="hero-meta">
-          <span className="mono" style={{ color: 'var(--accent)', fontWeight: 600 }}>Girona (Santa Eugènia) &middot; Banyoles (Estany)</span>
+          <span className="mono" style={{ color: 'var(--accent)', fontWeight: 600 }}>Girona (Santa Eugènia) &middot; Banyoles (Canaleta)</span>
         </div>
         <h1 className="hero-title">
           Escola de <em>música i arts</em><br />
