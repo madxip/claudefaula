@@ -70,22 +70,22 @@ const CODIRECTORES = [
 ];
 
 const PROFES = [
-  { name: 'Maria Cruz', img: 'MariaCruz.jpg', role: 'Direcció · Pedagogia', quote: 'Fer classes per mi és una manera de viure i de construir.' },
-  { name: 'Gerard Llavero', img: 'GerardLlavero.jpg', role: 'Professor de Guitarra, bateria i harmònica', quote: 'T\'ajudaré a connectar amb la música!' },
-  { name: 'Mariona', img: 'Mariona.jpg', role: 'Professora de Trompeta, trombó i sensibilització musical', quote: 'Equivocar-se també és aprendre.' },
-  { name: 'Ana Olguín', img: 'AnaOlguin.jpg', role: 'Moviment · Música', quote: 'La barreja del moviment, la música i l\'espai és increïble.' },
-  { name: 'Pau Sagrera', img: 'PauSagrera.jpg', role: 'Instrument · Joves', quote: 'Tu posa-hi ganes i la tècnica ja anirà sortint.' },
+  { name: 'Maria Cruz', img: 'MariaCruz.jpg', role: 'Professora de combo, big band, saxo, sensibilització musical i piano', quote: 'Fer classes per mi és una manera de viure i de construir.' },
+  { name: 'Gerard Llavero', img: 'GerardLlavero.jpg', role: 'Professor de conjunt instrumental', quote: 'T\'ajudaré a connectar amb la música!' },
+  { name: 'Mariona Taltavull', img: 'Mariona.jpg', role: 'Professora de Trompeta, trombó i sensibilització musical', quote: 'Equivocar-se també és aprendre.' },
+  { name: 'Ana Olguín', img: 'AnaOlguin.jpg', role: 'Professora de dansa, teatre musical, sensibilització musical i piano', quote: 'La barreja del moviment, la música i l\'espai és increïble.' },
+  { name: 'Pau Sagrera', img: 'PauSagrera.jpg', role: 'Professor de guitarra i piano', quote: 'Tu posa-hi ganes i la tècnica ja anirà sortint.' },
   { name: 'Laia Gomes', img: 'LaiaGomes.jpg', role: 'Professora de piano, flauta travessera, guitarra, bateria, llenguatge musical, sensibilització musical i combo', quote: 'Equivocar-se és la millor manera d\'aprendre.' },
-  { name: 'Marc Daunis', img: 'MarcDaunis.jpg', role: 'Combos · Conjunt', quote: 'Espavila i no et queixis, que al final ja sortirà!' },
-  { name: 'Meritxell Maset', img: 'MertitxellMaset.jpg', role: 'Cant · Sensibilització', quote: 'Escolta\'t i gaudeix de cada petita melodia.' },
-  { id: 'didac', name: 'Dídac Moral', img: 'DidacMoral.jpg', role: 'Cos · Interpretació', quote: 'S\'ha de filtrar la interpretació a través del cos.' },
-  { name: 'Xavier Tudela', img: 'XavierTudela.jpg', role: 'Instrument · Llenguatge', quote: 'Atura\'t, pensa i després toca!' },
-  { name: 'Joan Remacha', img: 'JoanRemacha.jpg', role: 'Mestre · Formació', quote: 'Sempre s\'ha d\'estar disposat a aprendre.' },
+  { name: 'Marc Daunis', img: 'MarcDaunis.jpg', role: 'Professor d\'instruments tradicionals', quote: 'Espavila i no et queixis, que al final ja sortirà!' },
+  { name: 'Meritxell Maset', img: 'MertitxellMaset.jpg', role: 'Professora de flauta dolça i piano', quote: 'Escolta\'t i gaudeix de cada petita melodia.' },
+  { name: 'Dídac Moral', img: 'DidacMoral.jpg', role: 'Professor de percussió', quote: 'S\'ha de filtrar la interpretació a través del cos.' },
+  { name: 'Xavier Tudela', img: 'XavierTudela.jpg', role: 'Professor de piano, llenguatge musical, roda d\'instruments, cant i guitarra', quote: 'Atura\'t, pensa i després toca!' },
+  { name: 'Joan Remacha', img: 'JoanRemacha.jpg', role: 'Professor de trompeta', quote: 'Sempre s\'ha d\'estar disposat a aprendre.' },
   { name: 'Rita Cantó', img: 'RitaCanto.jpg', role: 'Professora de sensibilització musical, violí i teatre musical', quote: 'Prova-ho i després ja veurem què passa.' },
-  { name: 'Jaume Sureda', img: 'JaumeSureda.jpg', role: 'Professora de guitarra, bateria, llenguatge musical i combo', quote: 'Frase destacada.' },
+  { name: 'Jaume Sureda', img: 'JaumeSureda.jpg', role: 'Professor de guitarra, bateria, llenguatge musical i combo', quote: 'Frase destacada.' },
   { name: 'Joel Moreno', img: 'JoelMoreno.jpg', role: 'Professor de flauta travessera, cant, llenguatge musical i sensibilització musical', quote: 'La música vol molt de mimo.' },
   { name: 'Albert Mademont', img: 'AlbertMademont.jpg', role: 'Professor a Claudefaula Banyoles i a Claudefaula Girona de piano, llenguatge, combo i guitarra', quote: 'Aquí venim a aprendre però també a passar-nos-ho molt bé!' },
-  { name: 'Andrea Jerónimo', img: 'AndreaJeronimo.jpg', role: 'Professora de... ', quote: 'Frase destacada' },
+  { name: 'Andrea Jerónimo', img: 'AndreaJeronimo.jpg', role: 'Professora de cant, piano, guitarra, sensibilització musical ', quote: 'Frase destacada' },
   { name: 'Elena Birtwistle', img: 'ElenaBirtwistle.jpg', role: 'Professora de sensibilització infantil, cant coral i arpa', quote: 'Escoltem, experimentem i gaudim: així és com aprenem música.' },
   { name: 'Cesc Coromines', img: 'CescCoromines.jpg', role: 'Professor de violoncel i cambra', quote: 'Tocar un instrument és com cuidar una planta: si la reges i et quedes mirant-la, no la veuràs créixer. Però si la vas regant dia rere dia, al cap d’un temps t’adonaràs que ha crescut.' },
 ];
@@ -221,7 +221,7 @@ function Contacte() {
       <section className="contacte">
         <div className="seu">
           <span className="seu-eyebrow">Seu original · des del 1996</span>
-          <h3>Sta. <em>Eugènia</em><br />Girona</h3>
+          <h3>Sta. Eugènia<br /><em>Girona</em></h3>
           <address>
             <a
               href="https://maps.google.com/maps?q=C%2F+Campcard%C3%B3s+39+Girona"
@@ -237,7 +237,7 @@ function Contacte() {
             <a href="tel:+34972245047">+34 972 24 50 47</a>
             <a href="tel:+34640723728">+34 640 72 37 28</a>
             <a href="mailto:info@claudefaula.cat">info@claudefaula.cat</a>
-            <span>De 17:00 a 20:30 de dilluns a divendres</span>
+            <span>De 16:00 a 20:00 de dilluns a divendres</span>
           </div>
           <div className="seu-map">
             <iframe
@@ -254,7 +254,7 @@ function Contacte() {
         </div>
         <div className="seu">
           <span className="seu-eyebrow">Seu nova · des del 2023</span>
-          <h3>Banyoles<br /><em>Estany</em></h3>
+          <h3>Canaleta<br /><em>Banyoles</em></h3>
           <address>
             <a
               href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x12bac390126b570f:0x31f4a65133530658?sa=X&ved=1t:8290&ictx=111"

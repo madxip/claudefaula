@@ -200,7 +200,7 @@ function Home({ setPage, tweaks }) {
         </h1>
         <div className="hero-sub">
           <p className="hero-lede reveal">
-            Música per a tothom: <strong>classes de piano, guitarra, cant, bateria, violí, sensibilització i música per a adults</strong>. Una escola de barri amb <em>màxima qualitat</em> educativa.
+            Tots els <strong>instruments, sensibilització musical, llenguatge musical, conjunt instrumental, música per adults i dansa i teatre musical</strong>. Una escola de barri amb <em>màxima qualitat</em> educativa.
           </p>
           <div className="hero-cta">
             <button className="btn" onClick={() => setPage('inscripcio')}>Inscriu-te ara →</button>
