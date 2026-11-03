@@ -267,18 +267,37 @@ function useReveal() {
   });
 }
 
-function parseCSVLine(line) {
-  const cols = [];
+function parseCSVRows(text) {
+  const rows = [];
+  let row = [];
   let cur = '';
   let inQ = false;
-  for (let i = 0; i < line.length; i++) {
-    const ch = line[i];
-    if (ch === '"') { inQ = !inQ; }
-    else if (ch === ',' && !inQ) { cols.push(cur.trim()); cur = ''; }
-    else { cur += ch; }
+  const clean = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+
+  for (let i = 0; i < clean.length; i++) {
+    const ch = clean[i];
+    if (ch === '"') {
+      if (inQ && clean[i + 1] === '"') {
+        cur += '"';
+        i++;
+      } else {
+        inQ = !inQ;
+      }
+    } else if (ch === ',' && !inQ) {
+      row.push(cur.trim());
+      cur = '';
+    } else if (ch === '\n' && !inQ) {
+      row.push(cur.trim());
+      if (row.some(cell => cell !== '')) rows.push(row);
+      row = [];
+      cur = '';
+    } else {
+      cur += ch;
+    }
   }
-  cols.push(cur.trim());
-  return cols;
+  row.push(cur.trim());
+  if (row.some(cell => cell !== '')) rows.push(row);
+  return rows;
 }
 
 function parseDateStr(str) {
@@ -320,10 +339,10 @@ function isDateActive(dataIniciStr, dataFiStr) {
 }
 
 function parseBannerCSV(text) {
-  const lines = text.trim().replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n');
-  if (lines.length < 2) return null;
-  for (let i = 1; i < lines.length; i++) {
-    const [visible, etiqueta, textCol, botoText, botoLink, dataInici, dataFi] = parseCSVLine(lines[i]);
+  const rows = parseCSVRows(text);
+  if (rows.length < 2) return null;
+  for (let i = 1; i < rows.length; i++) {
+    const [visible, etiqueta, textCol, botoText, botoLink, dataInici, dataFi] = rows[i];
     const isVis = visible && ['si', 'sí', '1', 'true'].includes(visible.toLowerCase().trim());
     if (isVis && isDateActive(dataInici, dataFi)) {
       return {
@@ -341,33 +360,52 @@ function parseBannerCSV(text) {
 }
 
 const DEFAULT_BANNER_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS6dn96ihqnjp5Rh_ti-xKcSD9BN2B0hxjOtc_c6sLDt-9O98PSh1sw32xxlUV4SBhxIg3FW7PdFCaH/pub?gid=741259203&single=true&output=csv';
+const BANNER_CACHE_KEY = 'claudefaula_banner_cache_v1';
+
+function readCachedBanner() {
+  try {
+    const raw = sessionStorage.getItem(BANNER_CACHE_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
 
 function TopBanner({ setPage, csvUrl = DEFAULT_BANNER_CSV_URL }) {
   const [dismissed, setDismissed] = useState(false);
-  const [banner, setBanner] = useState({
-    visible: true,
-    badge: 'INSCRIPCIONS OBERTES',
-    text: 'Ja està obert el període de matrícules per al curs 2026–2027.',
-    buttonText: 'Inscriu-te ara →',
-    buttonLink: 'inscripcio',
-    dataInici: '',
-    dataFi: '',
-  });
+  const [banner, setBanner] = useState(() => readCachedBanner());
 
   useEffect(() => {
     if (!csvUrl) return;
-    fetch(`${csvUrl}&_t=${Date.now()}`, { cache: 'no-store' })
-      .then(r => r.ok ? r.text() : Promise.reject(r.status))
-      .then(text => {
+    let cancelled = false;
+
+    const loadBanner = async () => {
+      try {
+        let res = await fetch(`${csvUrl}&_t=${Date.now()}`, { cache: 'no-store' }).catch(() => null);
+        if (!res || !res.ok) {
+          res = await fetch(csvUrl);
+        }
+        if (!res || !res.ok) return;
+        const text = await res.text();
         const parsed = parseBannerCSV(text);
-        if (parsed) setBanner(parsed);
-      })
-      .catch(() => { });
+        if (parsed && !cancelled) {
+          setBanner(parsed);
+          try {
+            sessionStorage.setItem(BANNER_CACHE_KEY, JSON.stringify(parsed));
+          } catch { }
+        }
+      } catch { }
+    };
+
+    loadBanner();
+    return () => { cancelled = true; };
   }, [csvUrl]);
 
-  const activeByDate = isDateActive(banner.dataInici, banner.dataFi);
+  if (dismissed || !banner || !banner.visible) return null;
 
-  if (dismissed || !banner.visible || !activeByDate) return null;
+  const activeByDate = isDateActive(banner.dataInici, banner.dataFi);
+  if (!activeByDate) return null;
 
   const handleAction = () => {
     if (!banner.buttonLink) return;

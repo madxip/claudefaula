@@ -62,18 +62,37 @@ const CHIPS = [
 // ─── AGENDA · Google Sheets ───────────────────────────────────────────────
 const AGENDA_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS6dn96ihqnjp5Rh_ti-xKcSD9BN2B0hxjOtc_c6sLDt-9O98PSh1sw32xxlUV4SBhxIg3FW7PdFCaH/pub?gid=0&single=true&output=csv';
 
-function parseCSVLine(line) {
-  const cols = [];
+function parseCSVRows(text) {
+  const rows = [];
+  let row = [];
   let cur = '';
   let inQ = false;
-  for (let i = 0; i < line.length; i++) {
-    const ch = line[i];
-    if (ch === '"') { inQ = !inQ; }
-    else if (ch === ',' && !inQ) { cols.push(cur.trim()); cur = ''; }
-    else { cur += ch; }
+  const clean = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+
+  for (let i = 0; i < clean.length; i++) {
+    const ch = clean[i];
+    if (ch === '"') {
+      if (inQ && clean[i + 1] === '"') {
+        cur += '"';
+        i++;
+      } else {
+        inQ = !inQ;
+      }
+    } else if (ch === ',' && !inQ) {
+      row.push(cur.trim());
+      cur = '';
+    } else if (ch === '\n' && !inQ) {
+      row.push(cur.trim());
+      if (row.some(cell => cell !== '')) rows.push(row);
+      row = [];
+      cur = '';
+    } else {
+      cur += ch;
+    }
   }
-  cols.push(cur.trim());
-  return cols;
+  row.push(cur.trim());
+  if (row.some(cell => cell !== '')) rows.push(row);
+  return rows;
 }
 
 function resolveImg(url) {
@@ -146,11 +165,11 @@ function isAgendaEventActive(dateStr, dataFiCol) {
 }
 
 function parseAgendaCSV(text) {
-  const lines = text.trim().replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n');
-  if (lines.length < 2) return [];
-  return lines.slice(1)
-    .map(line => {
-      const [data, hora, titol, lloc, preu, etiqueta, visible, imatge, dataFi] = parseCSVLine(line);
+  const rows = parseCSVRows(text);
+  if (rows.length < 2) return [];
+  return rows.slice(1)
+    .map(cols => {
+      const [data, hora, titol, lloc, preu, etiqueta, visible, imatge, dataFi] = cols;
       return { date: data, time: hora, title: titol, place: lloc, price: preu, tag: etiqueta, visible, img: resolveImg(imatge), dataFi };
     })
     .filter(e =>
@@ -160,19 +179,49 @@ function parseAgendaCSV(text) {
     );
 }
 
+const AGENDA_CACHE_KEY = 'claudefaula_agenda_cache_v1';
+
+function readCachedAgenda() {
+  try {
+    const raw = sessionStorage.getItem(AGENDA_CACHE_KEY);
+    if (!raw) return [];
+    return JSON.parse(raw);
+  } catch {
+    return [];
+  }
+}
+
 function Home({ setPage, tweaks }) {
   useReveal();
   const [filter, setFilter] = useState('tots');
   const filtered = filter === 'tots' ? CURSOS : CURSOS.filter(c => c.cat === filter);
 
   // Agenda dinàmica des de Google Sheets
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState(() => readCachedAgenda());
   useEffect(() => {
     if (!AGENDA_CSV_URL || AGENDA_CSV_URL.startsWith('ENGANXA')) return;
-    fetch(`${AGENDA_CSV_URL}&_t=${Date.now()}`, { cache: 'no-store' })
-      .then(r => r.ok ? r.text() : Promise.reject(r.status))
-      .then(text => setEvents(parseAgendaCSV(text)))
-      .catch(() => setEvents([]));
+    let cancelled = false;
+
+    const loadAgenda = async () => {
+      try {
+        let res = await fetch(`${AGENDA_CSV_URL}&_t=${Date.now()}`, { cache: 'no-store' }).catch(() => null);
+        if (!res || !res.ok) {
+          res = await fetch(AGENDA_CSV_URL);
+        }
+        if (!res || !res.ok) return;
+        const text = await res.text();
+        const parsed = parseAgendaCSV(text);
+        if (!cancelled) {
+          setEvents(parsed);
+          try {
+            sessionStorage.setItem(AGENDA_CACHE_KEY, JSON.stringify(parsed));
+          } catch { }
+        }
+      } catch { }
+    };
+
+    loadAgenda();
+    return () => { cancelled = true; };
   }, []);
 
   // Lightbox
