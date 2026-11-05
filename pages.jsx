@@ -85,7 +85,7 @@ const PROFES = [
   { name: 'Jaume Sureda', img: 'JaumeSureda.jpg', role: 'Professor de guitarra, bateria, llenguatge musical i combo', quote: 'No busquis la perfecció, sinó el que vegis que realment sona millor.' },
   { name: 'Joel Moreno', img: 'JoelMoreno.jpg', role: 'Professor de flauta travessera, cant, llenguatge musical i sensibilització musical', quote: 'La música vol molt de mimo.' },
   { name: 'Albert Mademont', img: 'AlbertMademont.jpg', role: 'Professor a Claudefaula Banyoles i a Claudefaula Girona de piano, llenguatge, combo i guitarra', quote: 'Aquí venim a aprendre però també a passar-nos-ho molt bé!' },
-  { name: 'Andrea Jerónimo', img: 'AndreaJeronimo.jpg', role: 'Professora de cant, piano, guitarra, sensibilització musical ', quote: 'Frase destacada' },
+  { name: 'Andrea Jerónimo', img: 'AndreaJeronimo.jpg', role: 'Professora de cant, piano, guitarra, sensibilització musical ', quote: 'No ho pensis tant i prova-ho!' },
   { name: 'Elena Birtwistle', img: 'ElenaBirtwistle.jpg', role: 'Professora de sensibilització infantil, cant coral i arpa', quote: 'Escoltem, experimentem i gaudim: així és com aprenem música.' },
   { name: 'Cesc Coromines', img: 'CescCoromines.jpg', role: 'Professor de violoncel i cambra', quote: 'Tocar un instrument és com cuidar una planta: si la reges i et quedes mirant-la, no la veuràs créixer. Però si la vas regant dia rere dia, al cap d’un temps t’adonaràs que ha crescut.' },
 ];
