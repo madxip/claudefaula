@@ -9,7 +9,7 @@ function Escola({ setPage }) {
     { year: '1996', title: 'Naixement a Sta. Eugènia', body: 'Comencem com a projecte de barri a Santa Eugènia de Girona, amb una idea clara: la música ha de ser per a tothom. Aules petites, mestres pròxims i moltes ganes.' },
     { year: '2008', title: 'Creixem amb la comunitat', body: 'L\'escola es consolida com a referent al barri. Apareixen nous itineraris, els primers combos juvenils i col·laboracions amb entitats locals.' },
     { year: '2018', title: 'Audicions obertes al barri', body: 'Traslladem algunes audicions a places i centres cívics. La música surt de l\'aula. Neix el cor obert i les jornades de portes obertes.' },
-    { year: '2023', title: 'Obrim seu a Banyoles', body: 'Inaugurem la segona seu, amb la mateixa filosofia i un equip docent ampliat. Programa adaptat al teixit cultural de l\'Estany.' },
+    { year: '2023', title: 'Tallers de creació musical a Banyoles', body: 'Inaugurem la segona seu, amb la mateixa filosofia i un equip docent ampliat. Programa adaptat al teixit cultural de l\'Estany.' },
     { year: '2026', title: 'Cap al segle XXI', body: 'Repensem el projecte amb il·lusió i sostenibilitat. Nous formats, projectes amb entitats socials i una atenció més fina a famílies, barri i ciutat.' },
   ];
   const valors = [
@@ -253,7 +253,7 @@ function Contacte() {
           </div>
         </div>
         <div className="seu">
-          <span className="seu-eyebrow">Seu nova · des del 2023</span>
+          <span className="seu-eyebrow">Des del 2023</span>
           <h3>Canaleta<br /><em>Banyoles</em></h3>
           <address>
             <a

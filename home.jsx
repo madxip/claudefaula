@@ -43,7 +43,7 @@ const CURSOS = [
 ];
 
 const INSTRUMENTS_SEO = [
-  { nom: 'Classes de Piano', desc: 'Apreneu piano clàssic, modern o acompanyament a Girona i Banyoles. Classes individuals adaptades a infants, joves i adults.' },
+  { nom: 'Classes de Piano', desc: 'Apreneu piano clàssic, modern o acompanyament. Classes individuals adaptades a infants, joves i adults.' },
   { nom: 'Classes de Guitarra', desc: 'Guitarra clàssica, acústica i elèctrica. Tècnica, acords, lectura i repertori pop, rock, jazz i tradicional.' },
   { nom: 'Classes de Cant & Tècnica Vocal', desc: 'Descobreix la teva veu. Respiració, afinació, vocalització, teatre musical i interpretació vocal.' },
   { nom: 'Classes de Bateria & Percussió', desc: 'Control de ritme, independència, tempo i coordinació per tocar en combos de pop-rock o ensembles.' },
@@ -243,9 +243,10 @@ function Home({ setPage, tweaks }) {
           <span className="mono" style={{ color: 'var(--accent)', fontWeight: 600 }}>Girona (Santa Eugènia) &middot; Banyoles (Canaleta)</span>
         </div>
         <h1 className="hero-title">
-          Escola de <em>música i arts</em><br />
-          a Girona i Banyoles<br />
-          des de <em>1996</em>.
+          Escola de <br />
+          <em>música i arts</em><br />
+          a Girona<br />
+          des de <em>1996</em>
         </h1>
         <div className="hero-sub">
           <p className="hero-lede reveal">
@@ -334,9 +335,9 @@ function Home({ setPage, tweaks }) {
       {/* INSTRUMENTS I ESPECIALITATS (OPTIMITZACIÓ PER CERQUES I IA) */}
       <section className="valors" style={{ paddingTop: 40, paddingBottom: 40 }}>
         <div className="valors-head">
-          <h3>Instruments i <em>Especialitats</em> a Girona i Banyoles.</h3>
+          <h3>Instruments i <em>Especialitats</em>.</h3>
           <p style={{ marginTop: 12, color: 'var(--muted)', maxWidth: '50ch' }}>
-            Classes d'instrument individual i col·lectiu amb professorat qualificat i metodologies adaptades.
+            Classes d'instrument individual i col·lectiu a Girona i tallers de creació musical a Banyoles, amb professorat qualificat i metodologies adaptades.
           </p>
         </div>
         <div className="valors-grid" style={{ marginTop: 24 }}>
