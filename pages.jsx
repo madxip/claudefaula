@@ -73,7 +73,7 @@ const PROFES = [
   { name: 'Maria Cruz', img: 'MariaCruz.jpg', role: 'Professora de combo, big band, saxo, sensibilització musical i piano', quote: 'Fer classes per mi és una manera de viure i de construir.' },
   { name: 'Gerard Llavero', img: 'GerardLlavero.jpg', role: 'Professor de conjunt instrumental', quote: 'T\'ajudaré a connectar amb la música!' },
   { name: 'Mariona Taltavull', img: 'Mariona.jpg', role: 'Professora de Trompeta, trombó i sensibilització musical', quote: 'Equivocar-se també és aprendre.' },
-  { name: 'Ana Olguín', img: 'AnaOlguin.jpg', role: 'Professora de dansa, teatre musical, sensibilització musical i piano', quote: 'La barreja del moviment, la música i l\'espai és increïble.' },
+  { name: 'Ana Olguín', img: 'AnaOlguin.jpg', role: 'Professora de dansa, teatre musical i sensibilització musical', quote: 'La barreja del moviment, la música i l\'espai és increïble.' },
   { name: 'Pau Sagrera', img: 'PauSagrera.jpg', role: 'Professor de guitarra i piano', quote: 'Tu posa-hi ganes i la tècnica ja anirà sortint.' },
   { name: 'Laia Gomes', img: 'LaiaGomes.jpg', role: 'Professora de piano, flauta travessera, guitarra, bateria, llenguatge musical, sensibilització musical i combo', quote: 'Equivocar-se és la millor manera d\'aprendre.' },
   { name: 'Marc Daunis', img: 'MarcDaunis.jpg', role: 'Professor d\'instruments tradicionals', quote: 'Espavila i no et queixis, que al final ja sortirà!' },
